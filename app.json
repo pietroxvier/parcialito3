@@ -8,7 +8,8 @@
       }
     },
     "scripts": {
-      "start": "node parcialito.js"
+      "start": "node parcialito.js",
+      "test": "echo \"No tests specified\" && exit 0"
     },
     "addons": []
   }
