@@ -1,0 +1,20 @@
+{
+    "name": "Parcialito",
+    "description": "Site de Estudos",
+    "env": {
+      "NODE_ENV": {
+        "description": "Ambiente de execução da aplicação",
+        "value": "production"
+      }
+    },
+    "scripts": {
+      "start": "parcialito.js"
+    },
+    "addons": [],
+    "buildpacks": [
+      {
+        "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
+      }
+    ]
+  }
+  
