@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const dbUrl = process.env.JAWSDB_MARIA_URL;
+
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -20,12 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 const JWT_SECRET = 'killuajr';
 
 // Configuração do banco de dados MySQL
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'parcialito'
-});
+const connection = mysql.createConnection(dbUrl);
+
 
 connection.connect((err) => {
   if (err) {
