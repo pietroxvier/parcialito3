@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
+const path = require('path');
 
 // Middleware para habilitar o CORS
 const corsOptions = {
@@ -14,7 +15,7 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const JWT_SECRET = 'killuajr';
 
