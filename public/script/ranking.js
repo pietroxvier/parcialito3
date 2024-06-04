@@ -5,7 +5,8 @@ new Vue({
     weeklyRanking: [],
     currentRanking: [],
     isDaily: true,
-    serverUrl: `${window.location.protocol}//${window.location.hostname}`
+    serverUrl: `${window.location.protocol}//${window.location.hostname}`,
+    jwtToken: localStorage.getItem('jwtToken') // Adicionado aqui
   },
   methods: {
     async fetchRanking(type) {
