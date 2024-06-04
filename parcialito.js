@@ -4,7 +4,7 @@ const mysql = require('mysql');
 
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const app = express();
 const port = 3000;
 const path = require('path');
