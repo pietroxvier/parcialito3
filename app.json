@@ -8,7 +8,7 @@
       }
     },
     "scripts": {
-      "start": "parcialito.js"
+      "start": "node parcialito.js"
     },
     "addons": [],
     "buildpacks": [
