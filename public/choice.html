@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preload" href="../fontes/exo2-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple Choice Questions - Medical Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles/questions.css">
+    <meta name="description" content="Multiple choice questions for medical students to test their knowledge.">
+    <meta name="keywords" content="education, medical, quiz, multiple choice, questions">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --primary-hover-color: #0056b3;
+            --secondary-color: #333;
+            --background-color: #f4f4f4;
+            --white-color: #fff;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --row-hover-color: #f1f1f1;
+        }
+
+        @font-face {
+            font-family: 'Exo2';
+            src: url('../fontes/exo2-400.woff2') format('woff2'),
+                 url('../fontes/exo2-400.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            font-family: 'Exo2', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .top-nav {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .top-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+
+        .top-nav ul li {
+            margin-right: 20px;
+        }
+
+        .top-nav ul li a {
+            color: var(--white-color);
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            padding: 17px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .top-nav ul li a:hover {
+            background-color: var(--primary-hover-color);
+        }
+
+        .top-nav ul li a i {
+            margin-right: 5px;
+        }
+
+        .content {
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            background-color: var(--white-color);
+            box-shadow: 0 0 15px var(--shadow-color);
+            border-radius: 10px;
+            margin: 40px auto;
+            flex-grow: 1;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .question {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--shadow-color);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .question:hover {
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .question h2 {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .answers {
+            list-style: none;
+            padding: 0;
+        }
+
+        .answers li {
+            margin-bottom: 10px;
+        }
+
+        .answers li label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .answers li label:hover {
+            background-color: var(--row-hover-color);
+        }
+
+        .answers li input[type="radio"] {
+            margin-right: 10px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-color);
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .answers li input[type="radio"]:checked {
+            border-color: var(--primary-hover-color);
+            background-color: var(--primary-hover-color);
+        }
+
+        .button-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .button-container button {
+            padding: 15px 30px;
+            font-size: 16px;
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 5px 10px var(--shadow-color);
+        }
+
+        .button-container button:hover {
+            background-color: var(--primary-hover-color);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .top-nav {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 10px;
+            }
+
+            .top-nav ul {
+                margin-top: 10px;
+            }
+
+            .top-nav ul li {
+                margin-right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <nav class="top-nav">
+        <ul>
+            <li><a href="progressbar.html"><i class="fas fa-clock"></i> Pomodoro</a></li>
+            <li><a href="ranking.html"><i class="fas fa-trophy"></i> Ranking</a></li>
+            <li><a href="#"><i class="fas fa-user"></i> Meu perfil</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+        </ul>
+        <ul>
+            <li><a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <section class="questions-section">
+            <h1>Multiple Choice Questions</h1>
+            <div class="question">
+                <h2>1. Which of the following cells are primarily involved in humoral immunity?</h2>
+                <ul class="answers">
+                    <li><label><input type="radio" name="q1" value="a"> A) T lymphocytes</label></li>
+                    <li><label><input type="radio" name="q1" value="b"> B) B lymphocytes</label></li>
+                    <li><label><input type="radio" name="q1" value="c"> C) Macrophages</label></li>
+                    <li><label><input type="radio" name="q1" value="d"> D) Natural killer cells</label></li>
+                    </ul>
+                    </div>
+                    <div class="question">
+                    <h2>2. What is the main function of cytotoxic T cells?</h2>
+                    <ul class="answers">
+                    <li><label><input type="radio" name="q2" value="a"> A) Produce antibodies</label></li>
+                    <li><label><input type="radio" name="q2" value="b"> B) Activate B cells</label></li>
+                    <li><label><input type="radio" name="q2" value="c"> C) Kill infected cells</label></li>
+                    <li><label><input type="radio" name="q2" value="d"> D) Present antigens to helper T cells</label></li>
+                    </ul>
+                    </div>
+                    <!-- Add more questions as needed -->
+                    </section>
+                    <div class="button-container">
+                    <button>Submit</button>
+                    </div>
+                    </main>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+                    <script src="script/questions.js"></script>
+                    <script src="script/logout.js"></script>
+                    </body>
+                    </html>

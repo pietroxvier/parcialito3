@@ -1,0 +1,154 @@
+Array
+(
+    [caixaDeTexto] => []
+)
+Array
+(
+    [caixaDeTexto] => [" dsdsadsad"]
+)
+Array
+(
+    [caixaDeTexto] => [" dsdsadsad"," dasdsadas"]
+)
+Array
+(
+    [caixaDeTexto] => [" dsdsadsad"," dasdsadas"," asd2421421"]
+)
+Array
+(
+    [caixaDeTexto] => []
+)
+Array
+(
+    [caixaDeTexto] => [" 43432432"]
+)
+Array
+(
+    [caixaDeTexto] => [" 43432432"," 4324242424"]
+)
+Array
+(
+    [caixaDeTexto] => [" 43432432"," 4324242424"," 2432432424"]
+)
+Array
+(
+    [caixaDeTexto] => [" 43432432"," 4324242424"," 2432432424"," ashgsagsag"]
+)
+Array
+(
+    [caixaDeTexto] => [" 43432432"," 4324242424"," 2432432424"," ashgsagsag"," muito bem felhadaputinnha"]
+)
+Array
+(
+    [caixaDeTexto] => [" vagabundo"]
+)
+Array
+(
+    [caixaDeTexto] => [" vagabundo"," pilantra"]
+)
+Array
+(
+    [caixaDeTexto] => [" vagabundo"," pilantra"," parou de funcionar :>D"]
+)
+Array
+(
+    [caixaDeTexto] => [" vagabundo"," pilantra"," parou de funcionar :>D"," 432432442"]
+)
+Array
+(
+    [caixaDeTexto] => [" vagabundo"," pilantra"," parou de funcionar :>D"," 432432442"," voltou a funcionar :@"]
+)
+Array
+(
+    [caixaDeTexto] => [" chega"]
+)
+Array
+(
+    [caixaDeTexto] => [" chega"," credo"]
+)
+Array
+(
+    [caixaDeTexto] => [" chega"," credo"," anao"]
+)
+Array
+(
+    [caixaDeTexto] => []
+)
+Array
+(
+    [caixaDeTexto] => [" 324324432"]
+)
+Array
+(
+    [caixaDeTexto] => [" 324324432"," 4324324324342"]
+)
+Array
+(
+    [caixaDeTexto] => [" 324324432"," 4324324324342"," atatata"]
+)
+Array
+(
+    [caixaDeTexto] => []
+)
+Array
+(
+    [caixaDeTexto] => [" fasfasfas"]
+)
+Array
+(
+    [caixaDeTexto] => [" fasfasfas"," chegaaaaaaaaaa"]
+)
+2024-01-01 06:09:32
+Received POST data:
+{
+    "caixaDeTexto": "[]"
+}
+
+2024-01-01 06:09:41
+Received POST data:
+{
+    "caixaDeTexto": "[\" 4324244\"]"
+}
+
+2024-01-01 06:12:03
+Received POST data:
+{
+    "caixaDeTexto": "[]"
+}
+
+2024-01-01 06:12:06
+Received POST data:
+{
+    "caixaDeTexto": "[\" aaaaa fodaaswe\"]"
+}
+
+2024-01-01 06:12:07
+Received POST data:
+{
+    "caixaDeTexto": "[\" aaaaa fodaaswe\",\" maluco doido mane\"]"
+}
+
+2024-01-01 06:12:09
+Received POST data:
+{
+    "caixaDeTexto": "[\" aaaaa fodaaswe\",\" maluco doido mane\",\" pqp\"]"
+}
+
+2024-01-01 06:12:11
+Received POST data:
+{
+    "caixaDeTexto": "[\" aaaaa fodaaswe\",\" maluco doido mane\",\" pqp\",\" nem vem\"]"
+}
+
+2024-01-01 06:12:12
+Received POST data:
+{
+    "caixaDeTexto": "[\" aaaaa fodaaswe\",\" maluco doido mane\",\" pqp\",\" nem vem\",\" fala comigo\"]"
+}
+
+2024-01-01 06:12:13
+Received POST data:
+{
+    "caixaDeTexto": "[\" nao\"]"
+}
+

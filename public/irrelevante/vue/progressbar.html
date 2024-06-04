@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Jogo da Medicina</title>
+    <link rel="stylesheet" href="style2.css">
+
+</head>
+<body>
+<audio id="xpSound" preload="auto">
+  <source src="levelup.mp3" type="audio/mpeg">
+</audio>
+<audio id="endPause" preload="auto">
+  <source src="pauseend.mp3" type="audio/mpeg">
+</audio>
+<div id="app">
+    <div class="sidebar">
+        <!-- Sidebar content goes here -->
+        <ul>
+            <li><a href="index.html">Início do Site</a></li>
+            <li><a href="#">Choices</a></li>
+            <li><a href="#">Meu perfil</a></li>
+            <li><a href="#">Configurações</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="progress-container">
+            <h1><div id="nivel">Nível {{ level }}</div></h1>
+            <p class="level-info">Seu progresso:</p>
+            <div class="progress-bar">
+                <div class="progress" :style="{ width: progress + '%' }"></div>
+            </div>
+            <p id="message" v-if="message.trim() !== ''">{{ message }}</p>
+            <span class="countdown-text" v-if="countdownVisible">{{ countdown }}</span>
+            <button id="more-xp" @click="handleMoreXpClick" :disabled="!canClick">Ganhar XP</button>
+
+            <!-- New avatar section -->
+            <div class="avatar-section">
+                <img src="enfermeira-fofa.svg" alt="Avatar">
+                <div class="name-selection">
+                    <div id="welcome-message">{{ welcomeMessage }}</div>
+                    <button @click="selectName('Josefina')" v-if="!nameSelected">Josefina</button>
+                    <button @click="selectName('Joseph')" v-if="!nameSelected">Joseph</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="script2.js"></script>
+</body>
+</html>

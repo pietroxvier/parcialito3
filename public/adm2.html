@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Provas</title>
+    <link rel="stylesheet" href="styles/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div id="app" v-cloak>
+    <nav class="sidebar">
+        <ul>
+            <li><a @click="currentView = 'addMateria'"><i class="fas fa-book"></i> Add Matéria</a></li>
+            <li><a @click="currentView = 'addCategoria'"><i class="fas fa-list"></i> Add Categoria</a></li>
+            <li><a @click="currentView = 'addQuestao'"><i class="fas fa-question"></i> Add Questão</a></li>
+            <li><a @click="currentView = 'addProva'"><i class="fas fa-file-alt"></i> Add Prova</a></li>
+            <li><a @click="currentView = 'editProva'"><i class="fas fa-edit"></i> Editar Prova</a></li>
+            <li><a @click="currentView = 'addExperience'"><i class="fas fa-plus"></i> Add XP</a></li>
+            <li><a href="catalog.html"><i class="fas fa-arrow-left"></i> Voltar</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <div v-if="currentView === 'addMateria'">
+            <h2>Adicionar Matéria</h2>
+            <form @submit.prevent="adicionarMateria">
+                <input v-model="novaMateria.nome" placeholder="Nome da Matéria">
+                <button type="submit">Adicionar Matéria</button>
+            </form>
+        </div>
+        <div v-if="currentView === 'addCategoria'">
+            <h2>Adicionar Categoria</h2>
+            <form @submit.prevent="adicionarCategoria">
+                <input v-model="novaCategoria.nome" placeholder="Nome da Categoria">
+                <select v-model="novaCategoria.materia_id">
+                    <option v-for="materia in materias" :value="materia.id">{{ materia.nome }}</option>
+                </select>
+                <button type="submit">Adicionar Categoria</button>
+            </form>
+        </div>
+        <div v-if="currentView === 'addQuestao'">
+            <h2>Adicionar Questão</h2>
+            <form @submit.prevent="adicionarQuestoes">
+                <div>
+                    <select v-model="questaoMateriaId" @change="filtrarCategoriasPorMateria">
+                        <option v-for="materia in materias" :value="materia.id">{{ materia.nome }}</option>
+                    </select>
+                    <select v-model="categoriaId">
+                        <option v-for="categoria in categoriasFiltradas" :value="categoria.id">{{ categoria.nome }}</option>
+                    </select>
+                    <select v-model="numeroDeRespostas" @change="atualizarOpcoesDeResposta">
+                        <option value="4">A a D</option>
+                        <option value="5">A a E</option>
+                    </select>
+                </div>
+                <button type="button" @click="adicionarQuestaoForm">+ Adicionar Questão</button>
+                <div v-for="(questao, index) in questoesForm" :key="index">
+                    <input v-model="questao.texto" placeholder="Texto da Questão">
+                    <div v-for="(opcao, idx) in opcoesDeResposta" :key="idx">
+                        <input v-model="questao.opcoes[opcao]" :placeholder="`Opção ${opcao}`">
+                    </div>
+                    <select v-model="questao.resposta_correta">
+                        <option v-for="opcao in opcoesDeResposta" :value="opcao">{{ opcao }}</option>
+                    </select>
+                </div>
+                <button type="submit">Enviar Questões</button>
+            </form>
+        </div>
+        <div v-if="currentView === 'addProva'">
+            <h2>Adicionar Prova</h2>
+            <form @submit.prevent="adicionarProva">
+                <input v-model="novaProva.nome" placeholder="Nome da Prova">
+                <select v-model="novaProva.materia_id">
+                    <option v-for="materia in materias" :value="materia.id">{{ materia.nome }}</option>
+                </select>
+                <button type="submit">Adicionar Prova</button>
+            </form>
+            <div v-if="provas.length > 0">
+                <h2>Adicionar Questões à Prova</h2>
+                <select v-model="provaSelecionada" @change="carregarQuestoesProva(provaSelecionada)">
+                    <option value="">Selecione uma Prova</option>
+                    <option v-for="prova in provas" :value="prova.id">{{ prova.nome }}</option>
+                </select>
+                <div v-if="provaSelecionada">
+                    <h3>Filtrar Questões Disponíveis</h3>
+                    <select v-model="questaoMateriaId" @change="filtrarCategoriasPorMateria">
+                        <option value="">Selecione uma Matéria</option>
+                        <option v-for="materia in materias" :value="materia.id">{{ materia.nome }}</option>
+                    </select>
+                    <select v-model="categoriaId" @change="filtrarQuestoesDisponiveis">
+                        <option value="">Selecione uma Categoria</option>
+                        <option v-for="categoria in categoriasFiltradas" :value="categoria.id">{{ categoria.nome }}</option>
+                    </select>
+                    <h3>Questões Disponíveis</h3>
+                    <div class="questoes-disponiveis">
+                        <div v-for="questao in questoesDisponiveis" :key="questao.id" class="questao-item">
+                            <label>
+                                <input type="checkbox" :value="questao.id" v-model="questoesSelecionadas">
+                                {{ questao.texto_questao }}
+                            </label>
+                        </div>
+                    </div>
+                    <button @click="adicionarQuestoesAProva">Adicionar Questões à Prova</button>
+                </div>
+                <div>
+                    <h3>Upload de Arquivo de Questões</h3>
+                    <input type="file" @change="processarArquivo">
+                </div>
+            </div>
+        </div>
+        
+
+        <div v-if="currentView === 'addExperience'">
+            <h2>Adicionar Experiência</h2>
+            <form @submit.prevent="adicionarExperiencia">
+                <select v-model="selectedUserId">
+                    <option value="">Selecione um Usuário</option>
+                    <option v-for="user in users" :value="user.id">{{ user.name }}</option>
+                </select>
+                <select v-model="experienceMultiplier">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+                <button type="submit">Adicionar Experiência</button>
+            </form>
+        </div>
+
+        <div v-if="currentView === 'editProva'">
+            <h2>Editar Prova</h2>
+            <form @submit.prevent="atualizarProva">
+                <select v-model="provaSelecionada" @change="carregarProva">
+                    <option value="">Selecione uma Prova</option>
+                    <option v-for="prova in provas" :value="prova.id">{{ prova.nome }}</option>
+                </select>
+                <input v-model="provaEdicao.nome" placeholder="Nome da Prova">
+                <select v-model="provaEdicao.materia_id">
+                    <option v-for="materia in materias" :value="materia.id">{{ materia.nome }}</option>
+                </select>
+                <button type="submit">Atualizar Prova</button>
+            </form>
+            <div v-if="questoesProva.length > 0">
+                <h3>Questões da Prova</h3>
+                <div v-for="(questao, index) in questoesProva" :key="index">
+                    <input v-model="questao.texto_questao" placeholder="Texto da Questão">
+                    <div v-for="(opcao, key) in questao.opcoes" :key="key">
+                        <input v-model="questao.opcoes[key]" :placeholder="`Opção ${key}`">
+                    </div>
+                    <select v-model="questao.resposta_correta">
+                        <option v-for="opcao in Object.keys(questao.opcoes)" :value="opcao">{{ opcao }}</option>
+                    </select>
+                    <button @click="atualizarQuestao(questao.id, questao)">Atualizar Questão</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="script/admin.js"></script>
+</body>
+</html>

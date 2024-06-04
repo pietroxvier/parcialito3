@@ -1,0 +1,214 @@
+/* Defining root variables for theme colors, font sizes, and more */
+:root {
+    --primary-color: #007bff;
+    --hover-color: #0056b3;
+    --background-light: #f4f4f4;
+    --text-color: #333;
+    --box-shadow-color: rgba(0, 0, 0, 0.2);
+    --button-bg-color: #007bff;
+    --button-hover-bg-color: #0056b3;
+    --button-text-color: #fff;
+    --sidebar-bg-color: #007bff;
+    --sidebar-text-color: #fff;
+    --sidebar-hover-bg-color: #0056b3;
+    --content-bg-color: #fff;
+    --link-text-decoration: none;
+    --link-text-color: #fff;
+    --font-family: 'Exo2', sans-serif;
+    --border-radius: 10px;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-light);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+}
+
+#app {
+    display: flex;
+    flex-grow: 1;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: var(--sidebar-bg-color);
+    color: var(--sidebar-text-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px var(--box-shadow-color);
+    padding: 20px 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li:hover {
+    background-color: var(--sidebar-hover-bg-color);
+}
+
+.sidebar ul li a {
+    color: var(--link-text-color);
+    text-decoration: var(--link-text-decoration);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar ul li a i {
+    margin-right: 8px;
+}
+
+.content {
+    margin-left: 200px;
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    background-color: var(--content-bg-color);
+    box-shadow: 0 0 10px var(--box-shadow-color);
+    border-radius: var(--border-radius);
+}
+
+[v-cloak] {
+    display: none;
+}
+
+h1, h2 {
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+.button-container {
+    margin: 20px 0;
+}
+
+.button-container button {
+    padding: 10px 20px;
+    font-size: 14px;
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    border: none;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.button-container button.active {
+    background-color: var(--button-hover-bg-color);
+}
+
+.button-container button:hover {
+    background-color: var(--button-hover-bg-color);
+}
+
+.ranking-section {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: var(--background-light);
+}
+
+td {
+    background-color: var(--content-bg-color);
+}
+
+.first-place td {
+    background-color: #ffd700;
+    color: #000;
+}
+
+.second-place td {
+    background-color: #c0c0c0;
+    color: #000;
+}
+
+.third-place td {
+    background-color: #cd7f32;
+    color: #000;
+}
+
+.right-sidebar {
+    width: 250px;
+    background-color: #f9f9f9;
+    color: var(--text-color);
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px var(--box-shadow-color);
+    padding: 20px;
+}
+
+.right-sidebar .profile-summary, .right-sidebar .notifications {
+    margin-bottom: 20px;
+}
+
+.right-sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+}
+
+.right-sidebar h2 i {
+    margin-right: 8px;
+}
+
+.right-sidebar p, .right-sidebar ul {
+    margin: 0;
+    padding: 0;
+}
+
+.right-sidebar ul {
+    list-style: none;
+}
+
+.right-sidebar ul li {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .sidebar, .right-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .content {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Provas</title>
+    <link rel="stylesheet" href="styles/catalog.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div id="app" v-cloak>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="progressbar.html"><i class="fas fa-clock"></i> Pomodoro</a></li>
+            <li><a href="ranking.html"><i class="fas fa-trophy"></i> Ranking</a></li>
+            <li><a href="catalog.html"><i class="fas fa-book"></i> Choices</a></li>
+            <li><a href="#"><i class="fas fa-user"></i> Meu perfil</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+            <li><a href="adm2.html"><i class="fas fa-tools"></i> Admin</a></li>
+            <li><a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        </ul>
+    </nav>
+
+    <transition name="fade" mode="out-in">
+        <main class="content" v-if="!showResults" key="main-content">
+            <section class="select-materia-section" v-if="!materiaSelecionada" key="select-materia">
+                <h1>Selecione uma Matéria</h1>
+                <ul>
+                    <li v-for="materia in materias" :key="materia.id" @click="selecionarMateria(materia)">
+                        {{ materia.nome }}
+                    </li>
+                </ul>
+            </section>
+
+            <section class="select-prova-section" v-if="materiaSelecionada && !provaSelecionada" key="select-prova">
+                <h1>Selecione uma Prova para {{ materiaSelecionada.nome }}</h1>
+                <div class="prova-card" v-for="prova in provasFiltradas" :key="prova.id" @click="selecionarProva(prova)">
+                    <h2>{{ prova.nome }}</h2>
+                </div>
+            </section>
+
+            <section class="questions-section" v-if="provaSelecionada" key="questions-section">
+                <h1>{{ provaNome }}</h1>
+                <div class="question" v-for="(questao, index) in questoes" :key="index">
+                    <h2>{{ index + 1 }}. {{ questao.texto_questao }}</h2>
+                    <ul class="answers">
+                        <li v-for="(opcao, key) in questao.opcoes" :key="key">
+                            <label>
+                                <input type="radio" :name="'q' + index" :value="key" v-model="respostas[index]"> {{ key }}) {{ opcao }}
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <div class="button-container" v-if="provaSelecionada" key="submit-button">
+                <button @click="submeterRespostas">Enviar</button>
+            </div>
+        </main>
+
+        <main class="content" v-else key="results-content">
+            <section class="results-section">
+                <h1>Resultados da Prova</h1>
+                <div class="score">
+                    Nota: {{ pontuacao }} / {{ questoes.length }}
+                </div>
+                <div class="question" v-for="(resposta, index) in resultados" :key="index">
+                    <h2>{{ index + 1 }}. {{ resposta.texto }}</h2>
+                    <ul class="answers">
+                        <li v-for="(opcao, key) in resposta.opcoes" :key="key" :class="{ correct: resposta.correta && key === resposta.respostaCorreta, incorrect: !resposta.correta && key === resposta.respostaUsuario }">
+                            {{ key }}) {{ opcao }}
+                        </li>
+                    </ul>
+                    <p v-if="resposta.correta" class="correct">Você acertou!</p>
+                    <p v-else class="incorrect">Você errou. Resposta correta: {{ resposta.respostaCorreta }}</p>
+                </div>
+                <div class="reward-message" v-if="pontuacao === questoes.length">
+                    Parabéns! Você acertou todas as questões!
+                </div>
+                <div class="back-button">
+                    <button @click="voltar">Voltar</button>
+                </div>
+            </section>
+        </main>
+    </transition>
+
+    <aside class="right-sidebar">
+        <div class="profile-summary">
+            <h2 class="icon-spacing"><i class="fas fa-user-md"></i> Perfil</h2>
+            <p><strong>Nome:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Nível: </strong>{{ user.nivel }}</p>
+            <p><strong>Horas Semanais:</strong> {{ user.hoursStudied }}</p>
+        </div>
+        <div class="notifications">
+            <h2 class="icon-spacing"><i class="fas fa-bell"></i> Notificações</h2>
+            <ul>
+                <li>Não haverá aula nos dias 22 e 23.</li>
+            </ul>
+        </div>
+    </aside>
+</div>
+
+<script src="script/catalog.js"></script>
+</body>
+</html>

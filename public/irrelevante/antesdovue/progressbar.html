@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Jogo da Medicina</title>
+    <link rel="stylesheet" href="style2.css">
+
+</head>
+<body>
+<audio id="xpSound" preload="auto">
+  <source src="levelup.mp3" type="audio/mpeg">
+</audio>
+    <div class="sidebar">
+        <!-- Sidebar content goes here -->
+        <ul>
+            <li><a href="index.html">Início do Site</a></li>
+			<li><a href="#">Choices</a></li>
+            <li><a href="#">Meu perfil</a></li>
+            <li><a href="#">Configurações</a></li>
+			
+        </ul>
+    </div>
+	
+	    <div class="content">
+    <div class="progress-container">
+   <h1><div id="nivel">Nível 1</div></h1>
+        <p class="level-info">Seu progresso:</p>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+					        <p id="message"></p>
+<span id="countdown" class="countdown-text"></span>
+        <button id="more-xp">Ganhar XP</button>
+
+        
+        <!-- New avatar section -->
+        <div class="avatar-section">
+            <img src="enfermeira-fofa.svg" alt="Avatar">
+            <div class="name-selection">
+                <div id="welcome-message">Escolha seu nome:</div>
+                <button id="choose-josefina">Josefina</button>
+                <button id="choose-joseph">Joseph</button>
+                <p id="selected-name"></p>
+            </div>
+        </div>
+    </div>
+	    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="script2.js"></script>
+</body>
+</html>

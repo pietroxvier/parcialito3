@@ -1,0 +1,538 @@
+/* Reset some default styles */
+html, body {
+	
+    margin: 0;
+    padding: 0;
+    font-family: 'Exo 2', sans-serif;
+
+}
+
+/* Global styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: left;
+}
+
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 17px;
+    margin-bottom: 20px;
+	color: #777777;
+
+}
+
+hr {
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-top: 3px solid #cccccc8c; /* Adding a 1px solid line */
+}
+
+/* Updated button styles */
+.button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, color 0.3s ease, filter 0.2s ease; /* Added transition effect */
+	text-transform: uppercase; /* Added text-transform property */
+	box-shadow: 0px 5px #0063cd;
+}
+
+
+.button:hover {
+    background-color: #007bff; /* Darker color on hover */
+    color: #fff; /* Text color on hover */
+    filter: brightness(120%); /* Apply a filter to make it slightly lighter on hover */
+	
+}
+
+/* Updated button styles for button2 */
+.button2 {
+    display: inline-block;
+    background-color: #fff; /* Set the background color for the button */
+    color: #007bff; /* Set the text color for the button */
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, color 0.3s ease, filter 0.2s ease;
+    text-transform: uppercase;
+    box-shadow: 0px 5px #0063cd;
+	
+}
+
+/* Hover styles for button2 */
+.button2:hover {
+    background-color: #007bff; /* Darker color on hover */
+    color: #fff; /* Text color on hover */
+    filter: brightness(120%); /* Apply a filter to make it slightly lighter on hover */
+}
+
+/* Style for the modal */
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center; /* Horizontally center the modal */
+  align-items: center; /* Vertically center the modal */
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(5px); /* Add the backdrop-filter property for the blur effect */
+
+}
+
+.modal-content {
+  position: relative; /* Add position relative to the modal content */
+  background-color: #fff;
+  width: 80%; /* Adjust the width as needed (80% of the screen width) */
+  max-width: 500px; /* Set a maximum width for the modal content */
+  margin: 190px auto;
+  padding-top: 40px;
+    padding-right: 80px;
+  padding-left: 60px;
+    padding-bottom: 60px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(0.95);
+    display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  
+}
+
+.modal.open {
+  display: flex; /* Change display to flex to center the modal */	
+  opacity: 1;
+}
+
+.modal.open .modal-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.modal-content form input[type="text"],
+.modal-content form input[type="email"],
+.modal-content form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+} 
+
+
+.close {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #444;
+  z-index: 1; /* Add a higher z-index to make sure it's above the modal content */
+}
+
+.close:hover {
+  color: #777;
+}
+
+/* Additional styles to match your website design */
+.modal h2 {
+  margin-bottom: 20px;
+    font-size: 26px;
+    text-align: center
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 5px;
+  
+}
+
+.modal input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal button {
+  background-color: #007bff;
+  margin-top: 20px;
+   display: block;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+  box-shadow: 0px 5px #0063cd;
+  transition: background-color 0.3s ease, color 0.3s ease, filter 0.2s ease; /* Added transition effect */	
+}
+
+.modal button:hover {
+    background-color: #007bff; /* Darker color on hover */
+    color: #fff; /* Text color on hover */
+    filter: brightness(110%); /* Apply a filter to make it slightly lighter on hover */
+}
+
+#login-modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center; /* Horizontally center the modal */
+  align-items: center; /* Vertically center the modal */
+  transition: opacity 0.3s ease;
+  backdrop-filter: blur(5px); /* Add the backdrop-filter property for the blur effect */
+}
+
+#login-modal.open {
+  display: flex; /* Change display to flex to center the modal */
+}
+
+#login-modal .modal-content {
+  position: relative; /* Add position relative to the modal content */
+  background-color: #fff;
+  width: 80%; /* Adjust the width as needed (80% of the screen width) */
+  max-width: 500px; /* Set a maximum width for the modal content */
+  margin: 190px auto;
+  padding-top: 40px;
+  padding-right: 80px;
+  padding-left: 60px;
+  padding-bottom: 60px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transform: scale(0.95);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#login-modal.open .modal-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #d8000c;
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  display: none; /* Initially hidden */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: scale(0.95);
+}
+
+.error-message.show {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.error-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.error-message.shake {
+  animation: shake 0.5s;
+}
+
+/* Header styles */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* Adjust the height as desired */
+    background-color: #019cf1 ;
+    color: #fff;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between; /* Align items on opposite ends */
+    align-items: center;
+    z-index: 1000; /* Add z-index to keep the header on top */
+	
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-left: 150px; /* Add left margin */
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    margin-right: 150px; /* Add right margin */
+	
+}
+
+.buttons a.button {
+    background-color: #fff; /* New color for the header buttons */
+    color: #007bff; /* New text color for the header buttons */
+    margin-left: 10px; /* Add spacing between the buttons */
+}
+
+.buttons a.button:hover {
+    background-color: #007bff; /* New color for the header buttons on hover */
+    color: #fff; /* Text color on hover */
+}
+
+/* Hide the header buttons by default */
+.buttons.hidden {
+  display: none;
+}
+
+/* Hero styles */
+.hero {
+  background-image: url('../imagens/banner-escolar.webp');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh; /* Adjust the height to cover the viewport */
+  display: flex;
+  align-items: center;
+  
+}
+
+.hero-content {
+  width: 100%;
+  position: relative; /* Add relative positioning to the hero content */
+
+}
+
+.content-container {
+  color: #fff;
+  position: absolute; /* Add absolute positioning to adjust the text position */
+  top: 30%; /* Adjust the top position (percentage) */
+  left: 29%; /* Adjust the left position (percentage) */
+  transform: translate(-50%, -59%); /* Center the text using translation */
+  gap: 52px;
+}
+
+.content-container h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.content-container p {
+	color: #fff;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+
+/* Main content styles */
+#learn-section {
+    background-color: #f8f9fa;
+    padding: 110px 0; /* Adjust the padding to accommodate the smaller header */
+}
+
+#practice-section {
+  background-color: #f8f9fa;
+  padding: 100px 0; /* Adjust the padding to accommodate the smaller header */
+}
+
+#compete-section {
+    background-color: #e9ecef;
+    padding: 90px 0; /* Adjust the padding to accommodate the smaller header */
+	  background-color: #f1f3f5;
+  border-radius: 15px; /* Increase the border radius for a more rounded look */
+  margin-bottom: 20px; /* Add margin between sections */
+}
+
+
+.image-container {
+    float: left;
+    margin-left: 60px;
+}
+
+.image-container2 {
+    float: right;
+    margin-left: 60px;
+}
+
+.image-container3 {
+    float: left;
+    margin-left: 60px;
+	
+}
+
+.container:last-child {
+    margin-bottom: 0; /* Remove margin-bottom from the last container */
+}
+
+/* Achievements section styles */
+#achievements-section {
+    background-color: #f1f3f5;
+    padding: 90px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#achievements-section h2 {
+    font-size: 24px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.achievement {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.achievement img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.achievement h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.achievement p {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #e9ecef;
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    line-height: 20px;
+}
+
+
+/* Footer styles */
+footer {
+    background-image: url('2854935_orig.gif'); /* Add the same background image as in the hero section */
+    background-size: cover;
+    background-position: middle;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+/* Explicitly set the text color for the <p> tag within the footer */
+footer p {
+    color: #fff;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .logo {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .buttons {
+        display: none; /* Hide buttons in mobile version */
+    }
+
+    .image-container {
+        float: left;
+        margin: 0 auto 20px;
+    }		
+	  .content-container {
+    top: 40%; /* Adjust the top position for smaller screens */
+    left: 50%;
+	transform: translate(-50%, +30%); /* Center the text using translation */
+  }
+  
+      .achievement img {
+        width: 100px;
+        height: 100px;
+    }
+
+}
+
+@media (max-width: 576px) {
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  p {
+    font-size: 14px;
+  }
+  .content-container {
+    top: 10%; /* Adjust the top position for even smaller screens */
+  }
+  
+    /* Adjust min-height for smaller screens */
+  .hero {
+    min-height: 100vh;
+	background-image: url('../imagens/banner-escolar-mobile.webp');
+  }
+}

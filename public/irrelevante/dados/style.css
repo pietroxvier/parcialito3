@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 5px;
+    box-sizing: content-box;
+    font-family: 'Press Start 2P';
+    font-size: 5px;
+}
+
+body { 
+    background-color: #111111;
+    background-image: url(hotel.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow:hidden;
+}
+
+hr {
+    width: 100%;
+    margin: 0;
+    border: 0.005rem solid white;
+}
+
+h1 {
+    letter-spacing: -6px;
+    background: linear-gradient(90deg, #f1aa24, orangered);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 4rem;
+}
+
+p {
+    font-size: 10px;
+    color: #DFE0DF;
+}
+
+
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 95vh;
+    color: #DFE0DF;
+    flex-direction: column;
+    text-align: center;
+}
+
+section#main {
+    position: absolute;
+    background-color: #111111f3;
+}
+section label {
+    font-size: 10px;
+    letter-spacing: -1px;
+}
+
+section.valores #Nome {
+font-size: 20px;
+color:darkorange;
+}
+.bubble
+{
+position: relative;
+width: 275px;
+height: 16px;
+padding: 3px;
+background: #FFFFFF;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;
+color: black;
+text-align: left;
+letter-spacing: 1px;
+margin: 6px;
+font-size: 10px;
+padding-left: 6px; /* Adjust the left padding as needed */
+padding-top: 3px;
+
+box-shadow: inset 0 0 0 1px blue;
+}
+
+
+
+#caixaDeTexto {
+    padding: 10px;
+    font-size: 10px;
+    touch-action: manipulation; /* Impede o zoom automático */
+}
+
+#botaoInput {
+    padding: 12px;
+    font-size: 10px;
+    font-family: 'Press Start 2P';
+    background-color: #FFAD59;
+    border-radius: 6px;
+    border: 1px solid #000;
+    cursor: pointer;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+        0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+#botaoInput:hover {
+    background-color: #f0740e;
+}
+
+section.valores {
+    width: 100%;
+    height: auto;
+    font-size: 1.2rem;
+    padding: 0;
+    text-align: 0;
+    justify-content: 0;
+    align-items: 0;
+    flex-direction: 0;
+    text-align: 0;
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,141 @@
+/* Reset some default styles */
+html, body {
+	
+    margin: 0;
+    padding: 0;
+    font-family: 'Exo 2', sans-serif;
+
+}
+
+/* Global styles */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: left;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 19px;
+    margin-bottom: 20px;
+	color: #777777;
+}
+
+/* Updated button styles */
+.button {
+    display: inline-block;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, color 0.3s ease, filter 0.2s ease; /* Added transition effect */
+	text-transform: uppercase; /* Added text-transform property */
+	box-shadow: 0px 5px #0063cd;
+}
+
+
+.button:hover {
+    background-color: #007bff; /* Darker color on hover */
+    color: #fff; /* Text color on hover */
+    filter: brightness(120%); /* Apply a filter to make it slightly lighter on hover */
+	
+}
+
+/* Header styles */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px; /* Adjust the height as desired */
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between; /* Align items on opposite ends */
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-left: 150px; /* Add left margin */
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    margin-right: 150px; /* Add right margin */
+}
+
+.buttons a.button {
+    background-color: #fff; /* New color for the header buttons */
+    color: #007bff; /* New text color for the header buttons */
+    margin-left: 10px; /* Add spacing between the buttons */
+}
+
+.buttons a.button:hover {
+    background-color: #007bff; /* New color for the header buttons on hover */
+    color: #fff; /* Text color on hover */
+}
+
+/* Main content styles */
+#learn-section {
+    background-color: #f8f9fa;
+    padding: 90px 0; /* Adjust the padding to accommodate the smaller header */
+}
+
+#practice-section {
+    background-color: #f1f3f5;
+    padding: 90px 0; /* Adjust the padding to accommodate the smaller header */
+}
+
+#compete-section {
+    background-color: #e9ecef;
+    padding: 90px 0; /* Adjust the padding to accommodate the smaller header */
+}
+
+.image-container {
+    float: left;
+    margin-left: 60px;
+}
+
+.container:last-child {
+    margin-bottom: 0; /* Remove margin-bottom from the last container */
+}
+/* Footer styles */
+footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+/* Responsive styles */
+@media only screen and (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .logo {
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .buttons {
+        display: none; /* Hide buttons in mobile version */
+    }
+
+    .image-container {
+        float: left;
+        margin: 0 auto 20px;
+    }
+}

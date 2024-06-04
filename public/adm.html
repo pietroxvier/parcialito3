@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Questões</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        #app {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            height: 100%;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .nav-link {
+            cursor: pointer;
+            padding: 10px;
+            display: block;
+            color: #000;
+            text-decoration: none;
+        }
+        .nav-link:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="sidebar">
+            <h4>Menu</h4>
+            <div>
+                <a class="nav-link" @click="currentView = 'addMateria'">Adicionar Matéria</a>
+                <a class="nav-link" @click="currentView = 'addCategoria'">Adicionar Categoria</a>
+                <a class="nav-link" @click="currentView = 'addQuestao'">Adicionar Questão</a>
+                <a class="nav-link" @click="currentView = 'montarProva'">Montar Prova</a>
+            </div>
+        </div>
+        <div class="main-content">
+            <div v-if="currentView === 'addMateria'">
+                <h2>Adicionar Matéria</h2>
+                <form @submit.prevent="adicionarMateria">
+                    <input v-model="novaMateria.nome" placeholder="Nome da Matéria">
+                    <button type="submit">Adicionar Matéria</button>
+                </form>
+            </div>
+            <div v-if="currentView === 'addCategoria'">
+                <h2>Adicionar Categoria</h2>
+                <form @submit.prevent="adicionarCategoria">
+                    <input v-model="novaCategoria.nome" placeholder="Nome da Categoria">
+                    <select v-model="novaCategoria.materia_id">
+                        <option v-for="materia in materias" :value="materia.id">{{ materia.nome }}</option>
+                    </select>
+                    <button type="submit">Adicionar Categoria</button>
+                </form>
+            </div>
+            <div v-if="currentView === 'addQuestao'">
+                <h2>Adicionar Questões</h2>
+                <form @submit.prevent="adicionarQuestoes">
+                    <div>
+                        <select v-model="questaoMateriaId" @change="filtrarCategoriasPorMateria">
+                            <option v-for="materia in materias" :value="materia.id">{{ materia.nome }}</option>
+                        </select>
+                        <select v-model="categoriaId">
+                            <option v-for="categoria in categoriasFiltradas" :value="categoria.id">{{ categoria.nome }}</option>
+                        </select>
+                        <select v-model="numeroDeRespostas" @change="atualizarOpcoesDeResposta">
+                            <option value="4">A a D</option>
+                            <option value="5">A a E</option>
+                        </select>
+                    </div>
+                    <button type="button" @click="adicionarQuestaoForm">+ Adicionar Questão</button>
+                    <div v-for="(questao, index) in questoesForm" :key="index">
+                        <input v-model="questao.texto" placeholder="Texto da Questão">
+                        <div v-for="(opcao, idx) in opcoesDeResposta" :key="idx">
+                            <input v-model="questao.opcoes[opcao]" :placeholder="`Opção ${opcao}`">
+                        </div>
+                        <select v-model="questao.resposta_correta">
+                            <option v-for="opcao in opcoesDeResposta" :value="opcao">{{ opcao }}</option>
+                        </select>
+                    </div>
+                    <button type="submit">Enviar Questões</button>
+                </form>
+            </div>
+            <div v-if="currentView === 'montarProva'">
+                <h2>Montar Prova</h2>
+                <div>
+                    <select v-model="filtroMateriaId" @change="buscarCategoriasPorMateria">
+                        <option value="">Selecione a Matéria</option>
+                        <option v-for="materia in materias" :value="materia.id">{{ materia.nome }}</option>
+                    </select>
+                    <select v-model="filtroCategoriaId" @change="buscarQuestoesDisponiveis">
+                        <option value="">Selecione a Categoria</option>
+                        <option v-for="categoria in categoriasFiltradas" :value="categoria.id">{{ categoria.nome }}</option>
+                    </select>
+                </div>
+                <div>
+                    <h3>Adicionar Nova Prova</h3>
+                    <form @submit.prevent="adicionarProva">
+                        <input v-model="novaProva.nome" placeholder="Nome da Prova">
+                        <button type="submit">Adicionar Prova</button>
+                    </form>
+                </div>
+                <div>
+                    <h3>Selecione a Prova</h3>
+                    <select v-model="provaSelecionada" @change="buscarQuestoesDisponiveis">
+                        <option value="">Selecione uma Prova</option>
+                        <option v-for="prova in provas" :value="prova.id">{{ prova.nome }}</option>
+                    </select>
+                </div>
+                <div>
+                    <h3>Questões Disponíveis</h3>
+                    <div v-for="questao in questoesDisponiveis" :key="questao.id">
+                        <label>
+                            <input type="checkbox" :value="questao.id" v-model="questoesSelecionadas">
+                            {{ questao.texto_questao }}
+                        </label>
+                    </div>
+                    <button @click="adicionarQuestoesAProva">Adicionar Questões à Prova</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                currentView: 'addMateria',
+                questoes: [],
+                categorias: [],
+                questoesForm: [],
+                materias: [],
+                categoriasFiltradas: [],
+                filtroMateriaId: '',
+                filtroCategoriaId: '',
+                questoesFiltradas: [],
+                questoesSelecionadas: [],
+                provas: [],
+                provaSelecionada: '',
+                questoesDisponiveis: [],
+                novaProva: {
+                    nome: ''
+                },
+                prova: [],
+                novaQuestao: {
+                    texto_questao: '',
+                    resposta_correta: '',
+                    categoria_id: ''
+                },
+                novaCategoria: {
+                    nome: '',
+                    materia_id: ''
+                },
+                novaMateria: {
+                    nome: ''
+                },
+                questaoMateriaId: '',
+                categoriaId: '',  // Adicionada para ser usada no modelo de formulário
+                numeroDeRespostas: 5,
+                opcoesDeResposta: ['A', 'B', 'C', 'D', 'E']
+            },
+            mounted() {
+                this.buscarMaterias();
+                this.buscarCategorias();
+                this.buscarProvas();
+            },
+            methods: {
+                buscarMaterias() {
+                    axios.get('http://localhost:3000/materias')
+                        .then(response => {
+                            this.materias = response.data;
+                            if (this.materias.length > 0) {
+                                this.questaoMateriaId = this.materias[0].id;
+                                this.filtrarCategoriasPorMateria();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro ao buscar matérias:', error);
+                        });
+                },
+                buscarCategorias() {
+                    axios.get('http://localhost:3000/categorias')
+                        .then(response => {
+                            this.categorias = response.data;
+                            this.filtrarCategoriasPorMateria();
+                        })
+                        .catch(error => {
+                            console.error('Erro ao buscar categorias:', error);
+                        });
+                },
+                buscarProvas() {
+                    axios.get('http://localhost:3000/provas')
+                        .then(response => {
+                            this.provas = response.data;
+                        })
+                        .catch(error => {
+                            console.error('Erro ao buscar provas:', error);
+                        });
+                },
+                filtrarCategoriasPorMateria() {
+                    this.categoriasFiltradas = this.categorias.filter(categoria => categoria.materia_id === this.questaoMateriaId);
+                },
+                adicionarQuestoes() {
+                    if (!this.categoriaId || this.questoesForm.length === 0) {
+                        alert('Por favor, selecione uma categoria e adicione pelo menos uma questão.');
+                        return;
+                    }
+                    axios.post('http://localhost:3000/questoes/multiplas', {
+                        questoes: this.questoesForm,
+                        categoriaId: this.categoriaId
+                    }).then(response => {
+                        alert('Questões adicionadas com sucesso!');
+                        this.questoesForm = []; // Limpa o formulário após o envio
+                    }).catch(error => {
+                        console.error('Erro ao adicionar questões:', error);
+                    });
+                },
+                adicionarQuestaoForm() {
+                    this.questoesForm.push({
+                        texto: '',
+                        opcoes: { 'A': '', 'B': '', 'C': '', 'D': '', 'E': '' }, // Inicializa todas as opções possíveis
+                        resposta_correta: 'A'  // Um valor default pode ser útil
+                    });
+                    this.atualizarOpcoesDeResposta(); // Atualiza as opções baseadas no número de respostas selecionado
+                },
+                adicionarCategoria() {
+                    axios.post('http://localhost:3000/categorias', this.novaCategoria)
+                        .then(() => {
+                            alert('Categoria adicionada com sucesso!');
+                            this.buscarCategorias();
+                            this.novaCategoria = { nome: '', materia_id: '' };
+                        })
+                        .catch(error => {
+                            console.error('Erro ao adicionar categoria:', error);
+                        });
+                },
+                adicionarMateria() {
+                    axios.post('http://localhost:3000/materias', this.novaMateria)
+                        .then(() => {
+                            alert('Matéria adicionada com sucesso!');
+                            this.buscarMaterias();
+                            this.novaMateria = { nome: '' };
+                        })
+                        .catch(error => {
+                            console.error('Erro ao adicionar matéria:', error);
+                        });
+                },
+                deletarQuestao(id) {
+                    axios.delete(`http://localhost:3000/questoes/${id}`)
+                        .then(() => {
+                            alert('Questão deletada com sucesso!');
+                            this.buscarQuestoes();
+                        })
+                        .catch(error => {
+                            console.error('Erro ao deletar questão:', error);
+                        });
+                },
+                atualizarOpcoesDeResposta() {
+                    this.questoesForm.forEach(questao => {
+                        if (this.numeroDeRespostas === '4') {
+                            delete questao.opcoes['E']; // Remove a opção E se o número de respostas for 4
+                        } else if (!questao.opcoes['E']) {
+                            questao.opcoes['E'] = ''; // Adiciona a opção E se não existir
+                        }
+                    });
+                },
+                buscarCategoriasPorMateria() {
+                    if (!this.filtroMateriaId) {
+                        this.categoriasFiltradas = [];
+                        return;
+                    }
+                    this.categoriasFiltradas = this.categorias.filter(categoria => categoria.materia_id === this.filtroMateriaId);
+                },
+                filtrarQuestoes() {
+                    if (!this.filtroCategoriaId) {
+                        this.questoesFiltradas = [];
+                        return;
+                    }
+                    axios.get(`http://localhost:3000/questoesPorCategoria/${this.filtroCategoriaId}`)
+                        .then(response => {
+                            this.questoesFiltradas = response.data;
+                        })
+                        .catch(error => {
+                            console.error('Erro ao buscar questões:', error);
+                            this.questoesFiltradas = [];
+                        });
+                },
+                buscarQuestoesDisponiveis() {
+                    if (!this.provaSelecionada || !this.filtroMateriaId || !this.filtroCategoriaId) {
+                        this.questoesDisponiveis = [];
+                        return;
+                    }
+                    axios.get('http://localhost:3000/questoesDisponiveis', {
+                        params: {
+                            provaId: this.provaSelecionada,
+                            materiaId: this.filtroMateriaId,
+                            categoriaId: this.filtroCategoriaId
+                        }
+                    }).then(response => {
+                        this.questoesDisponiveis = response.data;
+                    }).catch(error => {
+                        console.error('Erro ao buscar questões disponíveis:', error);
+                    });
+                },
+                adicionarProva() {
+                    axios.post('http://localhost:3000/provas', this.novaProva)
+                        .then(() => {
+                            alert('Prova adicionada com sucesso!');
+                            this.buscarProvas();
+                            this.novaProva = { nome: '' };
+                        })
+                        .catch(error => {
+                            console.error('Erro ao adicionar prova:', error);
+                        });
+                },
+                adicionarQuestoesAProva() {
+                    if (!this.provaSelecionada || this.questoesSelecionadas.length === 0) {
+                        alert('Por favor, selecione uma prova e pelo menos uma questão.');
+                        return;
+                    }
+                    axios.post(`http://localhost:3000/provas/${this.provaSelecionada}/questoes`, {
+                        questoes: this.questoesSelecionadas
+                    }).then(() => {
+                        alert('Questões adicionadas à prova com sucesso!');
+                        this.questoesSelecionadas = []; // Limpa a seleção após o envio
+                        this.buscarQuestoesDisponiveis(); // Atualiza a lista de questões disponíveis
+                    }).catch(error => {
+                        console.error('Erro ao adicionar questões à prova:', error);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

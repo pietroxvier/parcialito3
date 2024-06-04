@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Projetinho</title>
+    <link rel="stylesheet" href="mobile.css"/>
+<body>
+    <section id="main">
+        <img alt="logo" src="bobbaProject.gif"/>
+        <div id="aqui"></div>
+        <section class="valores">
+            <img alt="habbo-character" id="habboCharacter" src=""/>
+            <p id="Nome"></p>
+        </section>
+        <div id="chat">
+            <p>Chat:&nbsp;</p>
+        </div>
+        <form onsubmit="receberTexto(); return false;">
+            <label for="caixaDeTexto">Digite algo:</label>
+            <input type="text" id="caixaDeTexto" placeholder="Digite aqui" autocomplete="off">
+            <input type="submit" value="Enviar" id="botaoInput">
+        </form>
+    </section>
+</body>
+</html>
+<script>
+    const textoRecebido = document.getElementById("caixaDeTexto");
+    const p = document.getElementsByTagName("p")[1];
+    const messageLog = [];
+    // const pLog = document.getElementById("log");
+    
+    document.querySelector('#caixaDeTexto').onkeyup = () => {
+    if (document.querySelector('#caixaDeTexto').value.length > 0){
+        document.querySelector('#botaoInput').disabled = false;
+    } else {
+        document.querySelector('#botaoInput').disabled = true;
+    } }
+    
+    function receberTexto(){
+        console.log(textoRecebido.value);
+
+                          // Agora, você pode enviar os dados para o servidor usando AJAX
+                          var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    // A resposta do servidor, se houver, pode ser manipulada aqui
+                    console.log(this.responseText);
+                } 
+            };  
+            xhttp.open("POST", "salvar_dados.php", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    // Convert the messageLog array to a JSON string
+    var messageLogJSON = JSON.stringify(messageLog);
+    xhttp.send("caixaDeTexto=" + encodeURIComponent(messageLogJSON));
+
+
+        if(textoRecebido.value.toLowerCase().includes("cu") ||
+           textoRecebido.value.toLowerCase().includes("buceta") ||
+           textoRecebido.value.toLowerCase().includes("puta") ||
+           textoRecebido.value.toLowerCase().includes("pau")) {
+            appendToLog(' ' + "bobba");
+            textoRecebido.value = '';
+            emocao('Surpreso');
+        } else {
+            appendToLog(' ' + textoRecebido.value);
+            textoRecebido.value = '';
+            emocao('Feliz');
+        }
+    }
+
+    function appendToLog(message){
+        if (messageLog.length < 5){
+        messageLog.push(message);
+        updateMessageLog();
+        document.querySelector('#botaoInput').disabled = true; 
+        } else { 
+            console.log('ta cheio patrao')
+            const bubbles = document.getElementsByClassName('bubble');
+            localStorage.setItem('historico', messageLog)
+            while(bubbles.length > 0) {
+                bubbles[0].remove();
+            }
+
+            messageLog.splice(0, 7);
+            messageLog.push(message);
+            updateMessageLog();
+        }
+    }
+
+
+    function updateMessageLog() {
+       // pLog.innerText = messageLog.join("\n");
+
+        messageLog.every(message => {
+        const novoBubble = document.createElement("div");
+        novoBubble.className = "bubble";
+        novoBubble.textContent = messageLog[messageLog.length - 1];
+        const section = document.querySelector('#aqui');
+            section.appendChild(novoBubble);
+        
+        } ) }
+
+
+    function emocao(emotion){
+        const habboId = localStorage.getItem('fotoId');
+        const novaImagem = habboId + emotion + '.png';
+        document.querySelector('#habboCharacter').src = novaImagem;
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', function(){
+        document.querySelector('#botaoInput').disabled = true;
+        document.querySelector('#Nome').innerHTML = localStorage.getItem('Nome');
+        document.querySelector('#habboCharacter').src = localStorage.getItem('Habbo')
+;       
+})
+</script>
