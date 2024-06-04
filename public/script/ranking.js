@@ -5,7 +5,7 @@ new Vue({
     weeklyRanking: [],
     currentRanking: [],
     isDaily: true,
-    serverUrl: `${window.location.protocol}//${window.location.hostname}:8080`
+    serverUrl: `${window.location.protocol}//${window.location.hostname}`
   },
   methods: {
     async fetchRanking(type) {
@@ -30,7 +30,31 @@ new Vue({
         alert(`Failed to load ${type} ranking. Please check the console for more details.`);
       }
     },
-
+    // Barra Lateral Direita 
+    carregarDadosUsuario() {
+      axios.get(this.getFullUrl('/userData'), {
+        headers: {
+          'Authorization': `Bearer ${this.jwtToken}`
+        }
+      }).then(response => {
+        this.user.name = response.data.name;
+        this.user.email = response.data.email;
+        this.user.nivel = response.data.level;
+      }).catch(error => {
+        console.error('Erro ao carregar dados do usuário:', error);
+      });
+    },
+    carregarHorasEstudadas() {
+      axios.get(this.getFullUrl('/userWeeklyHours'), {
+        headers: {
+          'Authorization': `Bearer ${this.jwtToken}`
+        }
+      }).then(response => {
+        this.user.hoursStudied = Math.floor(response.data.hoursStudied);
+      }).catch(error => {
+        console.error('Erro ao carregar horas estudadas:', error);
+      });
+    },
     showDailyRanking() {
       this.isDaily = true;
       this.currentRanking = this.dailyRanking;
@@ -48,5 +72,7 @@ new Vue({
   mounted() {
     this.fetchRanking('daily');
     this.fetchRanking('weekly');
+    this.carregarDadosUsuario();
+    this.carregarHorasEstudadas();
   }
 });

@@ -62,16 +62,15 @@
     <aside class="right-sidebar">
         <div class="profile-summary">
             <h2 class="icon-spacing"><i class="fas fa-user-md"></i> Perfil</h2>
-            <p><strong>Nome:</strong> Dr. John Doe</p>
-            <p><strong>Email:</strong> johndoe@example.com</p>
-            <p><strong>Horas Estudadas:</strong> 120</p>
+            <p><strong>Nome:</strong> {{ user.name }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Nível: </strong>{{ user.nivel }}</p>
+            <p><strong>Horas Semanais:</strong> {{ user.hoursStudied }}</p>
         </div>
         <div class="notifications">
             <h2 class="icon-spacing"><i class="fas fa-bell"></i> Notificações</h2>
             <ul>
-                <li>Nova mensagem do mentor.</li>
-                <li>Desafio semanal disponível.</li>
-                <li>Atualização no ranking.</li>
+                <li>Não haverá aula nos dias 22 e 23.</li>
             </ul>
         </div>
     </aside>

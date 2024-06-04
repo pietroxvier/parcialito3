@@ -20,7 +20,7 @@ new Vue({
       nivel: '',
     },
     jwtToken: localStorage.getItem('jwtToken'), // Adicionado aqui
-    serverUrl: `${window.location.protocol}//${window.location.hostname}:8080` // Declaração da variável serverUrl como uma propriedade de dados
+    serverUrl: `${window.location.protocol}//${window.location.hostname}` // Declaração da variável serverUrl como uma propriedade de dados
   },
   mounted() {
     this.carregarProvas();
