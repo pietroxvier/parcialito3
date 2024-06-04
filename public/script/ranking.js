@@ -4,6 +4,12 @@ new Vue({
     dailyRanking: [],
     weeklyRanking: [],
     currentRanking: [],
+    user: {
+      name: '',
+      email: '',
+      hoursStudied: 0,
+      nivel: '',
+    },
     isDaily: true,
     serverUrl: `${window.location.protocol}//${window.location.hostname}`,
     jwtToken: localStorage.getItem('jwtToken') // Adicionado aqui
