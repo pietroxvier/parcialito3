@@ -10,11 +10,6 @@
     "scripts": {
       "start": "node parcialito.js"
     },
-    "addons": [],
-    "buildpacks": [
-      {
-        "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
-      }
-    ]
+    "addons": []
   }
   
