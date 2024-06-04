@@ -8,8 +8,7 @@ document.getElementById('registration-form').addEventListener('submit', function
     const password = document.getElementById('password').value;
   
     // Padrão do url
-    const serverPort = ':8080';
-    const serverUrl = `${window.location.protocol}//${window.location.hostname}${serverPort}`;
+    const serverUrl = `${window.location.protocol}//${window.location.hostname}`;
     const registerUrl = `${serverUrl}/cadastro`;
     // Constrói o objeto de dados a ser enviado para a API
     const data = {

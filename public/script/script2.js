@@ -16,7 +16,7 @@ new Vue({
     timeRemaining: 50 * 60 * 1000,
     isPaused: false,
     welcomeMessage: 'Escolha seu nome:',
-    serverUrl: `${window.location.protocol}//${window.location.hostname}:8080` // Declaração da variável serverUrl como uma propriedade de dados
+    serverUrl: `${window.location.protocol}//${window.location.hostname}` // Declaração da variável serverUrl como uma propriedade de dados
   },
   computed: {
     progressWidth() {

@@ -16,10 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const data = { email: email, password: password };
 
-    const serverPort = ':8080';
-    const serverUrl = `${window.location.protocol}//${window.location.hostname}${serverPort}`;
+    const serverUrl = `${window.location.protocol}//${window.location.hostname}`;
     const loginUrl = `${serverUrl}/login`;
-
+    
     axios.post(loginUrl, data)
       .then(function (response) {
         const token = response.data.token;
