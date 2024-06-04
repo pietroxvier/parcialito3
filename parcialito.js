@@ -39,6 +39,11 @@ connection.connect((err) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Rota padrão
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // API de Cadastro
 app.post('/cadastro', async (req, res) => {
   const { name, email, password } = req.body;
