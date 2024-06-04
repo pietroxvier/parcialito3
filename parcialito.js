@@ -23,10 +23,10 @@ const JWT_SECRET = 'killuajr';
 // Configuração do banco de dados MySQL
 // Configuração do banco de dados MySQL
 const connection = mysql.createConnection({
-  host: process.env.JAWSDB_MARIA_HOST,
-  user: process.env.JAWSDB_MARIA_USER,
-  password: process.env.JAWSDB_MARIA_PASSWORD,
-  database: process.env.JAWSDB_MARIA_DATABASE
+  host: process.env.JAWSDB_MARIA_HOST.trim(),
+  user: process.env.JAWSDB_MARIA_USER.trim(),
+  password: process.env.JAWSDB_MARIA_PASSWORD.trim(),
+  database: process.env.JAWSDB_MARIA_DATABASE.trim()
 });
 
 
