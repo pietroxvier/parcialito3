@@ -244,6 +244,7 @@
 }
 
 /* Add styles for the pomodoro toggle icon */
+
 .pomodoro-toggle {
     cursor: pointer;
     font-size: 24px;
@@ -269,6 +270,11 @@
     cursor: pointer;
   }
   
+  .pomodoro-options button.selected {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
   .pomodoro-options button:focus,
   .pomodoro-options button:hover {
     background-color: #ddd;
@@ -287,7 +293,6 @@
   .hidden {
     display: none;
   }
-  
 /* Media query for smaller screens */
 @media (max-width: 768px) {
     .sidebar {

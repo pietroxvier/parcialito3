@@ -44,9 +44,9 @@
                 <i class="fas fa-clock"></i>
             </div>
             <div class="pomodoro-options" v-if="showPomodoroOptions && !timerStarted">
-                <button @click="selectPomodoro(30)">30 minutos</button>
-                <button @click="selectPomodoro(50)">50 minutos</button>
-                <button @click="selectPomodoro(60)">60 minutos</button>
+                <button @click="selectPomodoro(30)" :class="{ selected: selectedPomodoro === 30 }">30 minutos</button>
+                <button @click="selectPomodoro(50)" :class="{ selected: selectedPomodoro === 50 }">50 minutos</button>
+                <button @click="selectPomodoro(60)" :class="{ selected: selectedPomodoro === 60 }">60 minutos</button>
             </div>
 
             <button id="more-xp" @click="handleMoreXpClick" v-if="pomodoroSelected && !showPomodoroOptions && !timerStarted" :disabled="!canClick">Ganhar XP</button>

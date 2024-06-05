@@ -1,6 +1,9 @@
 laranja: botao central #e78d0d
 borda inferior #cd5900
 
+
+laranja: #ec8f1c
+
 .pomodoro-options {
     display: inline-table;
     /* justify-content: center; */
