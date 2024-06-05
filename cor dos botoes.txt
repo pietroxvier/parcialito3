@@ -1,0 +1,14 @@
+laranja: botao central #e78d0d
+borda inferior #cd5900
+
+.pomodoro-options {
+    display: inline-table;
+    /* justify-content: center; */
+    margin-bottom: 4px;
+    /* visibility: hidden;
+
+.pomodoro-options button {
+    margin: 20px 3px;
+    padding: 7px 12px;
+    font-size: 14px;
+    cursor: pointer;

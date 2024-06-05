@@ -20,7 +20,8 @@ new Vue({
     pomodoroSelected: false,
     pomodoroTime: null,
     breakTime: null,
-    timerStarted: false // New property to track if timer has started
+    timerStarted: false, // New property to track if timer has started
+    showPomodoroOptions: false // New property to control visibility of pomodoro options
   },
   computed: {
     progressWidth() {
@@ -31,12 +32,17 @@ new Vue({
     getFullUrl(path) {
       return `${this.serverUrl}${path}`;
     },
-    
+
+    togglePomodoroOptions() {
+      if (this.timerStarted) return; // Prevent changing options after timer starts
+      this.showPomodoroOptions = !this.showPomodoroOptions;
+    },
+
     selectPomodoro(time) {
-      if (this.timerStarted) return; // Prevent changing time after timer starts
       this.pomodoroTime = time * 60 * 1000;
       this.breakTime = (time === 30) ? 5 * 60 * 1000 : 15 * 60 * 1000;
       this.pomodoroSelected = true;
+      this.showPomodoroOptions = false; // Hide options after selection
     },
 
     updateLevel(newLevel) {
