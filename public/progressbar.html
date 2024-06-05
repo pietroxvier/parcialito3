@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O Jogo da Medicina</title>
     <link rel="stylesheet" href="styles/style2.css">
+
 </head>
 <body>
 <audio id="xpSound" preload="auto">
@@ -15,52 +16,54 @@
 <audio id="endPause" preload="auto">
   <source src="musicas/pauseend.mp3" type="audio/mpeg">
 </audio>
-    <div id="app" v-cloak>
-        <div class="sidebar">
-            <!-- Sidebar content goes here -->
-            <ul>
-                <li><a href="progressbar.html"><i class="fas fa-clock"></i> Pomodoro</a></li>
-                <li><a href="ranking.html"><i class="fas fa-trophy"></i> Ranking</a></li>
-                <li><a href="catalog.html"><i class="fas fa-book"></i>Choices</a></li>
-                <li><a href="#"><i class="fas fa-user"></i> Meu perfil</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
-                <li><a href="adm2.html"><i class="fas fa-tools"></i>Admin</a></li>
-                <li><a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-            </ul>
-        </div>
-    
-        <div class="content">
-            <div class="progress-container">
-                <h1><div id="nivel">Nível {{ level }}</div></h1>
-                <p class="level-info">Seu progresso:</p>
-                <div class="progress-bar">
-                    <div class="progress" :style="{ width: progress + '%' }"></div>
-                </div>
-                <p id="message" v-if="message.trim() !== ''">{{ message }}</p>
-                <span class="countdown-text" v-if="countdownVisible">{{ countdown }}</span>
-                <div class="pomodoro-options">
-                    <button @click="selectPomodoro(30)">30 minutos</button>
-                    <button @click="selectPomodoro(50)">50 minutos</button>
-                    <button @click="selectPomodoro(60)">60 minutos</button>
-                </div>
-                <button id="more-xp" @click="handleMoreXpClick" :disabled="!canClick || !pomodoroSelected">Ganhar XP</button>
-    
-                <div class="avatar-section">
-                    <img src="imagens/enfermeira-fofa.svg" alt="Avatar">
-                    <div class="name-selection">
-                        <div id="welcome-message">{{ welcomeMessage }}</div>
-                        <button @click="selectName('Josefina')" v-if="!nameSelected">Josefina</button>
-                        <button @click="selectName('Joseph')" v-if="!nameSelected">Joseph</button>
-                    </div>
+<div id="app" v-cloak>
+    <div class="sidebar">
+        <!-- Sidebar content goes here -->
+        <ul>
+            <li><a href="progressbar.html"><i class="fas fa-clock"></i> Pomodoro</a></li>
+            <li><a href="ranking.html"><i class="fas fa-trophy"></i> Ranking</a></li>
+            <li><a href="catalog.html"><i class="fas fa-book"></i>Choices</a></li>
+            <li><a href="#"><i class="fas fa-user"></i> Meu perfil</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+            <li><a href="adm2.html"><i class="fas fa-tools"></i>Admin</a></li>
+            <li><a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="progress-container">
+            <h1><div id="nivel">Nível {{ level }}</div></h1>
+            <p class="level-info">Seu progresso:</p>
+            <div class="progress-bar">
+                <div class="progress" :style="{ width: progress + '%' }"></div>
+            </div>
+            <p id="message" v-if="message.trim() !== ''">{{ message }}</p>
+            <span class="countdown-text" v-if="countdownVisible">{{ countdown }}</span>
+            <div class="pomodoro-options">
+                <button @click="selectPomodoro(30)">30 minutos</button>
+                <button @click="selectPomodoro(50)">50 minutos</button>
+                <button @click="selectPomodoro(60)">60 minutos</button>
+            </div>
+            <button id="more-xp" @click="handleMoreXpClick" :disabled="!canClick || !pomodoroSelected">Ganhar XP</button>
+
+            <div class="avatar-section">
+                <img src="imagens/enfermeira-fofa.svg" alt="Avatar">
+                <div class="name-selection">
+                    <div id="welcome-message">{{ welcomeMessage }}</div>
+                    <button @click="selectName('Josefina')" v-if="!nameSelected">Josefina</button>
+                    <button @click="selectName('Joseph')" v-if="!nameSelected">Joseph</button>
                 </div>
             </div>
         </div>
     </div>
-    
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-<script src="scripts/script2.js"></script>
-<script src="scripts/logout.js"></script>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> 
+    <script src="script/script2.js"></script>
+    <script src="script/logout.js"></script>
+
+
 </body>
 </html>
