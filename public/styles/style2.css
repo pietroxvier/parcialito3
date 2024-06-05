@@ -268,16 +268,18 @@
     padding: 8px 12px;
     font-size: 14px;
     cursor: pointer;
+    background-color:#e78d0d;
+    box-shadow: 0px 5px #cd5900;
   }
   
   .pomodoro-options button.selected {
-    background-color: #28a745;
+    background-color: #d57113;
     color: #fff;
   }
   
   .pomodoro-options button:focus,
   .pomodoro-options button:hover {
-    background-color: #ddd;
+    background-color: #DE7122;
   }
   
   .pomodoro-options button:active {

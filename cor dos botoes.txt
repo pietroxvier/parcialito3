@@ -4,6 +4,10 @@ borda inferior #cd5900
 
 laranja: #ec8f1c
 
+selected:
+#d57113
+#dc720f
+
 .pomodoro-options {
     display: inline-table;
     /* justify-content: center; */
