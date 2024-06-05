@@ -242,6 +242,7 @@
 #sidebar-toggle:hover {
     background-color: #555; /* Darken the background on hover */
 }
+
 /* Add styles for the pomodoro toggle icon */
 .pomodoro-toggle {
     cursor: pointer;
@@ -280,6 +281,11 @@
   button[disabled] {
     cursor: not-allowed;
     opacity: 0.5;
+  }
+  
+  /* Hidden styles */
+  .hidden {
+    display: none;
   }
   
 /* Media query for smaller screens */
