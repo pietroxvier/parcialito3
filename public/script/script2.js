@@ -1,8 +1,8 @@
 new Vue({
   el: '#app',
   data: {
-    progress: parseInt(localStorage.getItem("progress")) || 0,
-    level: parseInt(localStorage.getItem("level")) || 1,
+    progress: 0,
+    level: 1,
     progressToday: 0,
     canClick: true,
     countdownVisible: false,
@@ -36,6 +36,9 @@ new Vue({
     togglePomodoroOptions() {
       if (this.timerStarted) return; // Prevent changing options after timer starts
       this.showPomodoroOptions = !this.showPomodoroOptions;
+      if (!this.showPomodoroOptions) {
+        this.pomodoroSelected = false; // Hide the "Ganhar XP" button if options are hidden again
+      }
     },
 
     selectPomodoro(time) {
@@ -83,7 +86,6 @@ new Vue({
           this.message = "";
         }, 3000);
         this.updateLevel(this.level);
-        localStorage.setItem("level", this.level);
       } else {
         this.setarProgresso(this.progress);
       }
@@ -133,20 +135,6 @@ new Vue({
         .catch(error => {
           console.error('Erro ao atualizar progresso no servidor:', error);
         });
-    },
-
-    loadFromLocalStorage() {
-      const savedProgress = localStorage.getItem("progress");
-      if (savedProgress !== null && this.progress === 0) {
-        this.progress = parseInt(savedProgress);
-      }
-
-      const savedSelectedName = localStorage.getItem("selectedName");
-      if (savedSelectedName) {
-        this.selectedName = savedSelectedName;
-        this.nameSelected = true;
-        this.welcomeMessage = `Seja bem-${this.selectedName === "Josefina" ? "vinda" : "vindo"}, ${this.selectedName}!`;
-      }
     },
 
     updateCountdown() {
@@ -225,14 +213,6 @@ new Vue({
       }
     },
 
-    selectName(name) {
-      if (!this.nameSelected) {
-        this.nameSelected = true;
-        this.welcomeMessage = `Seja bem-${name === "Josefina" ? "vinda" : "vindo"}, ${name}!`;
-        localStorage.setItem("selectedName", name);
-      }
-    },
-
     loadUserData() {
       const jwtToken = localStorage.getItem('jwtToken');
 
@@ -265,6 +245,5 @@ new Vue({
 
   mounted() {
     this.loadUserData();
-    this.loadFromLocalStorage();
   }
 });

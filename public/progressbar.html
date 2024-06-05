@@ -40,16 +40,16 @@
             <p id="message" v-if="message.trim() !== ''">{{ message }}</p>
             <span class="countdown-text" v-if="countdownVisible">{{ countdown }}</span>
 
-            <div class="pomodoro-toggle" @click="togglePomodoroOptions">
+            <div class="pomodoro-toggle" @click="togglePomodoroOptions" v-if="!timerStarted">
                 <i class="fas fa-clock"></i>
             </div>
-            <div class="pomodoro-options" v-if="showPomodoroOptions">
-                <button @click="selectPomodoro(30)" :disabled="timerStarted">30 minutos</button>
-                <button @click="selectPomodoro(50)" :disabled="timerStarted">50 minutos</button>
-                <button @click="selectPomodoro(60)" :disabled="timerStarted">60 minutos</button>
+            <div class="pomodoro-options" v-if="showPomodoroOptions && !timerStarted">
+                <button @click="selectPomodoro(30)">30 minutos</button>
+                <button @click="selectPomodoro(50)">50 minutos</button>
+                <button @click="selectPomodoro(60)">60 minutos</button>
             </div>
 
-            <button id="more-xp" @click="handleMoreXpClick" :disabled="!canClick || !pomodoroSelected">Ganhar XP</button>
+            <button id="more-xp" @click="handleMoreXpClick" v-if="pomodoroSelected && !showPomodoroOptions && !timerStarted" :disabled="!canClick">Ganhar XP</button>
 
             <div class="avatar-section">
                 <img src="imagens/enfermeira-fofa.svg" alt="Avatar">
@@ -61,6 +61,7 @@
             </div>
         </div>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
