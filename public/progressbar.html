@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O Jogo da Medicina</title>
     <link rel="stylesheet" href="styles/style2.css">
+
 </head>
 <body>
 <audio id="xpSound" preload="auto">
@@ -17,6 +18,7 @@
 </audio>
 <div id="app" v-cloak>
     <div class="sidebar">
+        <!-- Sidebar content goes here -->
         <ul>
             <li><a href="progressbar.html"><i class="fas fa-clock"></i> Pomodoro</a></li>
             <li><a href="ranking.html"><i class="fas fa-trophy"></i> Ranking</a></li>
@@ -38,9 +40,9 @@
             <p id="message" v-if="message.trim() !== ''">{{ message }}</p>
             <span class="countdown-text" v-if="countdownVisible">{{ countdown }}</span>
             <div class="pomodoro-options">
-                <button @click="selectPomodoro(30)" :disabled="timerStarted">30 minutos</button>
-                <button @click="selectPomodoro(50)" :disabled="timerStarted">50 minutos</button>
-                <button @click="selectPomodoro(60)" :disabled="timerStarted">60 minutos</button>
+                <button @click="selectPomodoro(30)">30  </button>
+                <button @click="selectPomodoro(50)">50 minutos</button>
+                <button @click="selectPomodoro(60)">60 minutos</button>
             </div>
             <button id="more-xp" @click="handleMoreXpClick" :disabled="!canClick || !pomodoroSelected">Ganhar XP</button>
 
@@ -55,10 +57,13 @@
         </div>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-<script src="scripts/script2.js"></script>
-<script src="scripts/logout.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> 
+    <script src="script/script2.js"></script>
+    <script src="script/logout.js"></script>
+
+
 </body>
 </html>
