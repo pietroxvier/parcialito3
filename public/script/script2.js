@@ -21,7 +21,8 @@ new Vue({
     pomodoroTime: null,
     breakTime: null,
     timerStarted: false, // New property to track if timer has started
-    showPomodoroOptions: false // New property to control visibility of pomodoro options
+    showPomodoroOptions: false, // New property to control visibility of pomodoro options
+    selectedPomodoro: null // New property to track selected pomodoro time
   },
   computed: {
     progressWidth() {
@@ -36,15 +37,13 @@ new Vue({
     togglePomodoroOptions() {
       if (this.timerStarted) return; // Prevent changing options after timer starts
       this.showPomodoroOptions = !this.showPomodoroOptions;
-      if (!this.showPomodoroOptions) {
-        this.pomodoroSelected = false; // Hide the "Ganhar XP" button if options are hidden again
-      }
     },
 
     selectPomodoro(time) {
       this.pomodoroTime = time * 60 * 1000;
       this.breakTime = (time === 30) ? 5 * 60 * 1000 : 15 * 60 * 1000;
       this.pomodoroSelected = true;
+      this.selectedPomodoro = time; // Set the selected pomodoro time
       this.showPomodoroOptions = false; // Hide options after selection
     },
 
