@@ -40,9 +40,9 @@
             <p id="message" v-if="message.trim() !== ''">{{ message }}</p>
             <span class="countdown-text" v-if="countdownVisible">{{ countdown }}</span>
             <div class="pomodoro-options">
-                <button @click="selectPomodoro(30)">30  </button>
-                <button @click="selectPomodoro(50)">50 minutos</button>
-                <button @click="selectPomodoro(60)">60 minutos</button>
+                <button @click="selectPomodoro(30)" :disabled="timerStarted">30 minutos</button>
+                <button @click="selectPomodoro(50)" :disabled="timerStarted">50 minutos</button>
+                <button @click="selectPomodoro(60)" :disabled="timerStarted">60 minutos</button>
             </div>
             <button id="more-xp" @click="handleMoreXpClick" :disabled="!canClick || !pomodoroSelected">Ganhar XP</button>
 
