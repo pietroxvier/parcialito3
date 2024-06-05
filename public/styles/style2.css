@@ -97,14 +97,14 @@
 
 /* Remove margin-left for the countdown element */
 .countdown-text {
-    font-size: 24px;
+    font-size: 35px;
     font-weight: bold;
     padding: 3px;
     color: #333;
     border-radius: 2px;
     margin-bottom: 5px;
     text-align: center;
-    display: block; /* Display the countdown as a block-level element */
+    display: block;
 }
 
 /* Add margin-top to the "morexp" button to separate it from the countdown */
@@ -124,13 +124,14 @@
 
 /* CSS styles for the message element */
 #message {
-    font-size: 18px;
+    font-size: 21px;
     font-weight: bold;
-    padding: 10px;
+    padding: 9px 0px 0px;
+    margin-bottom: 5px;
     border-radius: 5px;
     text-align: center;
-	  white-space: normal; /* Allow text to wrap */
-  word-wrap: break-word; /* Break long words if necessary */
+    white-space: normal;
+    word-wrap: break-word;
 }
 	
         .avatar-section {
