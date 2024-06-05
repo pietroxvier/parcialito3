@@ -3,7 +3,7 @@ new Vue({
   data: {
     progress: parseInt(localStorage.getItem("progress")) || 0,
     level: parseInt(localStorage.getItem("level")) || 1,
-    progressToday: 0, // New data property for progress earned today
+    progressToday: 0,
     canClick: true,
     countdownVisible: false,
     countdown: '',
@@ -13,10 +13,14 @@ new Vue({
     showMessage: false,
     startTime: null,
     breakStartTime: null,
-    timeRemaining: 50 * 60 * 1000,
+    timeRemaining: null, // Initially null to force selection
     isPaused: false,
     welcomeMessage: 'Escolha seu nome:',
-    serverUrl: `${window.location.protocol}//${window.location.hostname}` // Declaração da variável serverUrl como uma propriedade de dados
+    serverUrl: `${window.location.protocol}//${window.location.hostname}`,
+    pomodoroSelected: false,
+    pomodoroTime: null,
+    breakTime: null,
+    timerStarted: false // New property to track if timer has started
   },
   computed: {
     progressWidth() {
@@ -28,68 +32,71 @@ new Vue({
       return `${this.serverUrl}${path}`;
     },
     
-    updateLevel(newLevel) {
-      this.level = newLevel;
-        // Recupera o token JWT do localStorage
-  const jwtToken = localStorage.getItem('jwtToken');
-
-  if (!jwtToken) {
-    console.error('Token JWT não encontrado no localStorage');
-    return;
-  }
-
-  const headers = {
-    'Authorization': `Bearer ${jwtToken}`
-  };
-  const data = { level: newLevel };
-  const link = this.getFullUrl('/updateLevel'); // Usando o método getFullUrl para construir a URL completa
-
-  axios.post(link, data, { headers })
-    .then(response => {
-      console.log('Nível atualizado com sucesso no servidor:', response.data);
-    })
-    .catch(error => {
-      console.error('Erro ao atualizar nível no servidor:', error);
-    });
-
+    selectPomodoro(time) {
+      if (this.timerStarted) return; // Prevent changing time after timer starts
+      this.pomodoroTime = time * 60 * 1000;
+      this.breakTime = (time === 30) ? 5 * 60 * 1000 : 15 * 60 * 1000;
+      this.pomodoroSelected = true;
     },
 
-      updateProgress() {
-        // Calculate the incremental experience points
-        const incrementalXp = 100 / 7;
-        this.progress += incrementalXp;
-        this.progressToday += 1;
-    
-        if (this.progress >= 98) {
-          this.level++;
-          this.progress = 0;
-          this.message = `Parabéns, você subiu para o nível ${this.level}!`;
-    
-          setTimeout(() => {
-            this.message = "";
-          }, 3000);
-          this.updateLevel(this.level);
-          localStorage.setItem("level", this.level);
-        } else {
-          this.setarProgresso(this.progress);
-        }
-    
-        // Send the incremental experience points to the server
-        this.sendIncrementalExperience(incrementalXp);
-      },
-
-    sendIncrementalExperience(incrementalXp) {
+    updateLevel(newLevel) {
+      this.level = newLevel;
       const jwtToken = localStorage.getItem('jwtToken');
-  
+
       if (!jwtToken) {
         console.error('Token JWT não encontrado no localStorage');
         return;
       }
-  
+
+      const headers = {
+        'Authorization': `Bearer ${jwtToken}`
+      };
+      const data = { level: newLevel };
+      const link = this.getFullUrl('/updateLevel');
+
+      axios.post(link, data, { headers })
+        .then(response => {
+          console.log('Nível atualizado com sucesso no servidor:', response.data);
+        })
+        .catch(error => {
+          console.error('Erro ao atualizar nível no servidor:', error);
+        });
+    },
+
+    updateProgress() {
+      const incrementalXp = 100 / 7;
+      this.progress += incrementalXp;
+      this.progressToday += 1;
+
+      if (this.progress >= 98) {
+        this.level++;
+        this.progress = 0;
+        this.message = `Parabéns, você subiu para o nível ${this.level}!`;
+
+        setTimeout(() => {
+          this.message = "";
+        }, 3000);
+        this.updateLevel(this.level);
+        localStorage.setItem("level", this.level);
+      } else {
+        this.setarProgresso(this.progress);
+      }
+
+      this.sendIncrementalExperience(incrementalXp);
+    },
+
+    sendIncrementalExperience(incrementalXp) {
+      const jwtToken = localStorage.getItem('jwtToken');
+
+      if (!jwtToken) {
+        console.error('Token JWT não encontrado no localStorage');
+        return;
+      }
+
       const headers = { 'Authorization': `Bearer ${jwtToken}` };
       const data = { experiencePoints: incrementalXp };
       const link = this.getFullUrl('/addExperiencePoints');
-  
+
       axios.post(link, data, { headers })
         .then(response => {
           console.log('Pontos de experiência atualizados com sucesso no servidor:', response.data);
@@ -100,9 +107,6 @@ new Vue({
     },
     
     setarProgresso(newProgresso) {
-      console.log('comecei');
-
-      // Recupera o token JWT do localStorage
       const jwtToken = localStorage.getItem('jwtToken');
 
       if (!jwtToken) {
@@ -114,7 +118,7 @@ new Vue({
         'Authorization': `Bearer ${jwtToken}`
       };
       const data = { progress: newProgresso };
-      const link = this.getFullUrl('/updateProgress'); // Usando o método getFullUrl para construir a URL completa
+      const link = this.getFullUrl('/updateProgress');
 
       axios.post(link, data, { headers })
         .then(response => {
@@ -148,11 +152,10 @@ new Vue({
       } else if (this.breakStartTime) {
         elapsedTime = currentTime - this.breakStartTime;
       } else {
-        // Handle initial case or other scenarios as needed
-        // ...
+        return;
       }
 
-      if (elapsedTime >= this.timeRemaining) {
+      if (elapsedTime >= this.pomodoroTime) {
         clearInterval(this.countdownInterval);
         this.updateProgress();
         this.canClick = false;
@@ -165,7 +168,7 @@ new Vue({
         xpSound.volume = 0.2;
         xpSound.play();
 
-        let pauseTimeRemaining = 15 * 60 * 1000;
+        let pauseTimeRemaining = this.breakTime;
         const pauseCountdown = setInterval(() => {
           const pauseElapsed = performance.now() - currentTime;
           const pauseRemainingMilliseconds = pauseTimeRemaining - pauseElapsed;
@@ -192,7 +195,7 @@ new Vue({
           }
         }, 1000);
       } else {
-        const remainingMilliseconds = this.timeRemaining - elapsedTime;
+        const remainingMilliseconds = this.pomodoroTime - elapsedTime;
         const remainingSeconds = Math.ceil(remainingMilliseconds / 1000);
         const minutes = Math.floor(remainingSeconds / 60);
         const seconds = remainingSeconds % 60;
@@ -203,7 +206,8 @@ new Vue({
     },
 
     handleMoreXpClick() {
-      if (this.canClick) {
+      if (this.canClick && this.pomodoroSelected) {
+        this.timerStarted = true; // Set timer started to true
         this.canClick = false;
         this.showMessage = true;
         this.loadUserData();
@@ -223,10 +227,7 @@ new Vue({
       }
     },
 
-    // Método para carregar os dados do usuário usando o token JWT
     loadUserData() {
-      // Obtém o token JWT do localStorage
-      console.log('Iniciou a função');
       const jwtToken = localStorage.getItem('jwtToken');
 
       if (!jwtToken) {
@@ -234,37 +235,30 @@ new Vue({
         return;
       }
 
-      // Configura os cabeçalhos da solicitação com o token JWT
       const headers = {
         'Authorization': `Bearer ${jwtToken}`
       };
-      const link2 = this.getFullUrl('/userData'); // Usando o método getFullUrl para construir a URL completa
+      const link2 = this.getFullUrl('/userData');
 
-      // Faz uma solicitação GET para a rota protegida no seu servidor Node.js
       axios.get(link2, { headers })
         .then(response => {
-          // Dados do usuário retornados pelo servidor
           const userData = response.data;
-          // Atualiza os dados do usuário no Vue.js
           this.name = userData.name;
           this.level = userData.level;
           this.progress = userData.progress;
-          // Outros dados...
 
-          // Atualiza o nome selecionado e a mensagem de boas-vindas
           this.selectedName = this.name;
-      this.nameSelected = true;
-      this.welcomeMessage = `Seja bem-${this.selectedName === "Josefina" ? "vinda" : "vindo"}, ${this.selectedName}!`;
-    })
-    .catch(error => {
-      console.error('Erro ao carregar dados do usuário:', error);
-    });
-}
+          this.nameSelected = true;
+          this.welcomeMessage = `Seja bem-${this.selectedName === "Josefina" ? "vinda" : "vindo"}, ${this.selectedName}!`;
+        })
+        .catch(error => {
+          console.error('Erro ao carregar dados do usuário:', error);
+        });
+    }
+  },
 
-      },
-
-  
   mounted() {
     this.loadUserData();
+    this.loadFromLocalStorage();
   }
 });
