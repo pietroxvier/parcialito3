@@ -178,6 +178,11 @@ new Vue({
             setTimeout(() => {
               this.message = "Continue assim e estude mais uma vez!";
               this.canClick = true;
+              setTimeout(() => {
+                this.message = "";
+                this.pomodoroSelected = false;
+                this.timerStarted = false;
+              }, 3000);
             }, 3000);
           } else {
             const pauseRemainingSeconds = Math.ceil(pauseRemainingMilliseconds / 1000);
