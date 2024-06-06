@@ -249,7 +249,7 @@ tr.third-place td {
 
 /* Parte de la imagem del Podium */
 .podium {
-    display: block;
+    display: grid;
     justify-content: center;
     align-items: flex-end;
     position: relative;
@@ -278,33 +278,33 @@ tr.third-place td {
 }
 
 #avatar-name-1 {
-    top: -110px;
-    left: -254px;
+    top: -113px;
+    left: 9px;
 }
 
 .avatar-1 {
     top: -98px;
-    left: 107px;
+    left: 353px;
 }
 
 #avatar-name-2 {
     top: -73px;
-    left: -340px;
+    left: -69px;
 }
 
 .avatar-2 {
     top: -62px;
-    left: 37px;
+    left: 269px;
 }
 
 #avatar-name-3 {
-    top: -68px;
-    left: -158px;
+    top: -75x;
+    left: 81px;
 }
 
 .avatar-3 {
     top: -59px;
-    left: 194px;
+    left: 430px;
 }
 
 @media (max-width: 768px) {
