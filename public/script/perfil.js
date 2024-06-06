@@ -46,16 +46,16 @@ new Vue({
 
         scrollLeft() {
             this.$el.querySelector('.avatar-wrapper').scrollBy({
-              left: -100,
-              behavior: 'smooth'
+                left: -100,
+                behavior: 'smooth'
             });
-          },
-          scrollRight() {
+        },
+        scrollRight() {
             this.$el.querySelector('.avatar-wrapper').scrollBy({
-              left: 100,
-              behavior: 'smooth'
+                left: 100,
+                behavior: 'smooth'
             });
-          },
+        },
           
         atualizarPerfil() {
             if (this.password !== this.confirmPassword) {

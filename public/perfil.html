@@ -37,7 +37,7 @@
                     <div class="avatar-wrapper">
                         <img v-for="avatar in avatars" :src="avatar.src" :alt="avatar.alt" 
                             :class="{ selected: user.avatar === avatar.src }" 
-                            @click="selecionarAvatar(avatar.src)" class="avatar">
+                            @click="selecionarAvatar(avatar)" class="avatar">
                     </div>
                     <button type="button" @click="scrollRight" class="scroll-button right">&gt;</button>
                 </div>
