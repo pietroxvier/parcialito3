@@ -11,7 +11,8 @@ new Vue({
       avatars: [
         '/avatares/avatar1.webp',
         '/avatares/avatar2.webp',
-        '/avatares/avatar3.webp' // Adicione os caminhos corretos dos avatares aqui
+        '/avatares/avatar3.webp',
+        '/avatares/avatar6.webp',// Adicione os caminhos corretos dos avatares aqui
       ],
       jwtToken: localStorage.getItem('jwtToken')
     },
