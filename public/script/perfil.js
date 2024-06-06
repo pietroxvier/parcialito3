@@ -1,77 +1,51 @@
-const serverUrl = `${window.location.protocol}//${window.location.hostname}`;
-
 new Vue({
     el: '#app',
     data: {
-        user: {
-            name: '',
-            email: '',
-            avatar: '',
-            nivel: '',
-            hoursStudied: 0
-        },
+      user: {
+        name: '',
+        email: '',
+        avatar: '',
         password: '',
-        confirmPassword: '',
-        avatares: [], // Lista de URLs de avatares
-        jwtToken: localStorage.getItem('jwtToken')
+        confirmPassword: ''
+      },
+      avatars: [
+        'avatar1.webp',
+        'avatar2.webp',
+        'avatar3.webp' // Adicione os caminhos corretos dos avatares aqui
+      ],
+      jwtToken: localStorage.getItem('jwtToken')
     },
     mounted() {
-        this.carregarDadosUsuario();
-        this.carregarAvatares();
+      this.carregarDadosUsuario();
     },
     methods: {
-        carregarDadosUsuario() {
-            axios.get(`${serverUrl}/userData`, {
-                headers: {
-                    'Authorization': `Bearer ${this.jwtToken}`
-                }
-            }).then(response => {
-                this.user = response.data;
-            }).catch(error => {
-                console.error('Erro ao carregar dados do usuário:', error);
-            });
-        },
-        carregarAvatares() {
-            // Aqui você pode buscar os avatares disponíveis do servidor
-            axios.get(`${serverUrl}/avatares`, {
-                headers: {
-                    'Authorization': `Bearer ${this.jwtToken}`
-                }
-            }).then(response => {
-                this.avatares = response.data;
-            }).catch(error => {
-                console.error('Erro ao carregar avatares:', error);
-            });
-        },
-        atualizarPerfil() {
-            if (this.password !== this.confirmPassword) {
-                alert('As senhas não coincidem.');
-                return;
-            }
-
-            const dadosAtualizados = {
-                name: this.user.name,
-                email: this.user.email,
-                avatar: this.user.avatar
-            };
-
-            if (this.password) {
-                dadosAtualizados.password = this.password;
-            }
-
-            axios.put(`${serverUrl}/userData`, dadosAtualizados, {
-                headers: {
-                    'Authorization': `Bearer ${this.jwtToken}`
-                }
-            }).then(() => {
-                alert('Perfil atualizado com sucesso!');
-                this.carregarDadosUsuario();
-            }).catch(error => {
-                console.error('Erro ao atualizar perfil:', error);
-            });
-        },
-        selecionarAvatar(avatar) {
-            this.user.avatar = avatar;
+      carregarDadosUsuario() {
+        axios.get(`${window.location.protocol}//${window.location.hostname}/userData`, {
+          headers: {
+            'Authorization': `Bearer ${this.jwtToken}`
           }
+        }).then(response => {
+          this.user.name = response.data.name;
+          this.user.email = response.data.email;
+          this.user.avatar = response.data.avatar; // Adicione essa linha para carregar o avatar do usuário
+        }).catch(error => {
+          console.error('Erro ao carregar dados do usuário:', error);
+        });
+      },
+      atualizarPerfil() {
+        axios.put(`${window.location.protocol}//${window.location.hostname}/userData`, this.user, {
+          headers: {
+            'Authorization': `Bearer ${this.jwtToken}`
+          }
+        }).then(() => {
+          alert('Perfil atualizado com sucesso!');
+        }).catch(error => {
+          console.error('Erro ao atualizar perfil:', error);
+        });
+      },
+      selecionarAvatar(avatar) {
+        this.user.avatar = avatar;
+      }
     }
-});
+  });
+  
