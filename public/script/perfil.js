@@ -69,6 +69,9 @@ new Vue({
             }).catch(error => {
                 console.error('Erro ao atualizar perfil:', error);
             });
-        }
+        },
+        selecionarAvatar(avatar) {
+            this.user.avatar = avatar;
+          }
     }
 });
