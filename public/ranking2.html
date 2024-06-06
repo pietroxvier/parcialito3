@@ -28,23 +28,18 @@
         <div class="podium">
             <div class="podium-2">
                 <div v-if="ranking[1]" id="avatar-name-2" class="avatar-name">{{ ranking[1].name.split(' ')[0] }}</div>
-                <img v-if="ranking[1]" :src="ranking[1].avatar" class="avatar avatar-2" alt="Second Place">
+                <img v-if="ranking[1]" :src="ranking[1].avatar" class="avatar avatar-2" alt="2do lugar">
             </div>
             <div class="podium-1">
                 <div v-if="ranking[0]" id="avatar-name-1" class="avatar-name">{{ ranking[0].name.split(' ')[0] }}</div>
-                <img v-if="ranking[0]" :src="ranking[0].avatar" class="avatar avatar-1" alt="First Place">
+                <img v-if="ranking[0]" :src="ranking[0].avatar" class="avatar avatar-1" alt="1ro lugar">
             </div>
             <div class="podium-3">
                 <div v-if="ranking[2]" id="avatar-name-3" class="avatar-name">{{ ranking[2].name.split(' ')[0] }}</div>
-                <img v-if="ranking[2]" :src="ranking[2].avatar" class="avatar avatar-3" alt="Third Place">
+                <img v-if="ranking[2]" :src="ranking[2].avatar" class="avatar avatar-3" alt="3ro lugar">
             </div>
             <img src="podium.webp" alt="Podium" class="podium-img">
         </div>
-        <ul class="ranking-list">
-            <li v-for="(user, index) in ranking" :key="user.id">
-                <span>{{ index + 1 }}. {{ user.name }} - {{ user.hours }} horas</span>
-            </li>
-        </ul>
     </main>
 </div>
 

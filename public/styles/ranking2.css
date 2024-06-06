@@ -104,8 +104,8 @@ body {
 }
 
 #avatar-name-1 {
-    top: -60px;
-    left: 107px;
+    top: -110px;
+    left: -254px;
 }
 
 .avatar-1 {
@@ -114,23 +114,23 @@ body {
 }
 
 #avatar-name-2 {
-    top: -40px;
-    left: 51px;
+    top: -73px;
+    left: -340px;
 }
 
 .avatar-2 {
-    top: -8px;
-    left: 51px;
+    top: -62px;
+    left: 37px;
 }
 
 #avatar-name-3 {
-    top: -40px;
-    left: 206px;
+    top: -68px;
+    left: -158px;
 }
 
 .avatar-3 {
-    top: -4px;
-    left: 206px;
+    top: -59px;
+    left: 194px;
 }
 
 .ranking-list {

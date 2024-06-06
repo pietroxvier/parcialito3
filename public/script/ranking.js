@@ -4,6 +4,7 @@ new Vue({
     dailyRanking: [],
     weeklyRanking: [],
     currentRanking: [],
+    ranking: [],
     user: {
       name: '',
       email: '',
@@ -74,12 +75,27 @@ new Vue({
 
     getFullUrl(path) {
       return `${this.serverUrl}${path}`;
-    }
+    },
+
+// Parte que carrega os avatares
+    carregarRanking() {
+      axios.get(`${window.location.protocol}//${window.location.hostname}/weeklyRanking`, {
+          headers: {
+              'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+          }
+      }).then(response => {
+          this.ranking = response.data;
+      }).catch(error => {
+          console.error('Erro ao carregar ranking:', error);
+      });
+  },
+
   },
   mounted() {
     this.fetchRanking('daily');
     this.fetchRanking('weekly');
     this.carregarDadosUsuario();
     this.carregarHorasEstudadas();
+    this.carregarRanking();
   }
 });

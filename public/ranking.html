@@ -30,6 +30,27 @@
         <section class="ranking-section">
 
             <h1>Ranking {{ isDaily ? 'Diário' : 'Semanal' }}</h1>
+
+            <main class="content">
+                <h1>Ranking Semanal</h1>
+                <div class="podium">
+                    <div class="podium-2">
+                        <div v-if="ranking[1]" id="avatar-name-2" class="avatar-name">{{ ranking[1].name.split(' ')[0] }}</div>
+                        <img v-if="ranking[1]" :src="ranking[1].avatar" class="avatar avatar-2" alt="2do lugar">
+                    </div>
+                    <div class="podium-1">
+                        <div v-if="ranking[0]" id="avatar-name-1" class="avatar-name">{{ ranking[0].name.split(' ')[0] }}</div>
+                        <img v-if="ranking[0]" :src="ranking[0].avatar" class="avatar avatar-1" alt="1ro lugar">
+                    </div>
+                    <div class="podium-3">
+                        <div v-if="ranking[2]" id="avatar-name-3" class="avatar-name">{{ ranking[2].name.split(' ')[0] }}</div>
+                        <img v-if="ranking[2]" :src="ranking[2].avatar" class="avatar avatar-3" alt="3ro lugar">
+                    </div>
+                    <img src="/imagens/podium.webp" alt="Podium" class="podium-img">
+                </div>
+            </main>
+        </div>
+        
             <table>
                 <thead>
                     <tr>

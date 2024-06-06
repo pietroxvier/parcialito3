@@ -247,6 +247,66 @@ tr.third-place td {
     margin-bottom: 10px;
 }
 
+/* Parte de la imagem del Podium */
+.podium {
+    display: block;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    margin-top: 120px;
+    margin-bottom: 20px;
+}
+
+.podium-img {
+    width: 300px;
+    height: auto;
+}
+
+.avatar {
+    position: absolute;
+    width: 104px;
+    height: 117px;
+    border-radius: 50%;
+}
+
+.avatar-name {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+#avatar-name-1 {
+    top: -110px;
+    left: -254px;
+}
+
+.avatar-1 {
+    top: -98px;
+    left: 107px;
+}
+
+#avatar-name-2 {
+    top: -73px;
+    left: -340px;
+}
+
+.avatar-2 {
+    top: -62px;
+    left: 37px;
+}
+
+#avatar-name-3 {
+    top: -68px;
+    left: -158px;
+}
+
+.avatar-3 {
+    top: -59px;
+    left: 194px;
+}
+
 @media (max-width: 768px) {
     .sidebar, .right-sidebar {
         width: 100%;
