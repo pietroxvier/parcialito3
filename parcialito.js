@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const app = express();
 const port = process.env.PORT || 3000;
+const multer = require('multer');  // Adicionando o multer
 const path = require('path');
 
 // Middleware para habilitar o CORS
@@ -783,12 +784,12 @@ app.get('/provasPorMateria/:materiaId', verifyToken, (req, res) => {
   });
   
   const multer = require('multer');
-  const upload = multer({ dest: 'uploads/' });
+  const upload = multer({ dest: 'avatares/' });
   
   app.put('/userData', verifyToken, upload.single('avatar'), (req, res) => {
       const userId = req.userId;
       const { name, email, password } = req.body;
-      const avatar = req.file ? `/uploads/${req.file.filename}` : null;
+      const avatar = req.file ? `/avatares/${req.file.filename}` : null;
   
       let updateFields = [];
       let updateValues = [];
