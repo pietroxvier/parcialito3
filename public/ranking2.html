@@ -27,12 +27,15 @@
         <h1>Ranking Semanal</h1>
         <div class="podium">
             <div class="podium-2">
+                <div class="avatar-name" v-if="ranking[1]">{{ ranking[1].name.split(' ')[0] }}</div>
                 <img v-if="ranking[1]" :src="ranking[1].avatar" class="avatar avatar-2" alt="Second Place">
             </div>
             <div class="podium-1">
+                <div class="avatar-name" v-if="ranking[0]">{{ ranking[0].name.split(' ')[0] }}</div>
                 <img v-if="ranking[0]" :src="ranking[0].avatar" class="avatar avatar-1" alt="First Place">
             </div>
             <div class="podium-3">
+                <div class="avatar-name" v-if="ranking[2]">{{ ranking[2].name.split(' ')[0] }}</div>
                 <img v-if="ranking[2]" :src="ranking[2].avatar" class="avatar avatar-3" alt="Third Place">
             </div>
             <img src="podium.webp" alt="Podium" class="podium-img">

@@ -75,10 +75,11 @@ body {
 }
 
 .podium {
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: flex-end;
     position: relative;
+    margin-top: 120px;
     margin-bottom: 20px;
 }
 
@@ -89,25 +90,47 @@ body {
 
 .avatar {
     position: absolute;
-    width: 50px;
-    height: 50px;
+    width: 104px;
+    height: 117px;
     border-radius: 50%;
-    border: 3px solid var(--primary-color);
+}
+
+.avatar-name {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.avatar-1 .avatar-name {
+    top: -60px;
+    left: 0;
 }
 
 .avatar-1 {
-    top: -25px;
-    left: 125px;
+    top: -98px;
+    left: 107px;
+}
+
+.avatar-2 .avatar-name {
+    top: -40px;
+    left: 0;
 }
 
 .avatar-2 {
-    top: 20px;
-    left: 60px;
+    top: -8px;
+    left: 51px;
+}
+
+.avatar-3 .avatar-name {
+    top: -40px;
+    left: 0;
 }
 
 .avatar-3 {
-    top: 40px;
-    left: 190px;
+    top: -4px;
+    left: 206px;
 }
 
 .ranking-list {
