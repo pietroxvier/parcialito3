@@ -103,9 +103,9 @@ body {
     color: var(--secondary-color);
 }
 
-.avatar-1 .avatar-name {
+#avatar-name-1 {
     top: -60px;
-    left: 0;
+    left: 107px;
 }
 
 .avatar-1 {
@@ -113,9 +113,9 @@ body {
     left: 107px;
 }
 
-.avatar-2 .avatar-name {
+#avatar-name-2 {
     top: -40px;
-    left: 0;
+    left: 51px;
 }
 
 .avatar-2 {
@@ -123,9 +123,9 @@ body {
     left: 51px;
 }
 
-.avatar-3 .avatar-name {
+#avatar-name-3 {
     top: -40px;
-    left: 0;
+    left: 206px;
 }
 
 .avatar-3 {
