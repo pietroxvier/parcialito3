@@ -276,27 +276,34 @@ app.get('/dailyRanking', verifyToken, (req, res) => {
   });
 });
 
-// Rota para obter o ranking semanal
 app.get('/weeklyRanking', verifyToken, (req, res) => {
   const weeklyRankingQuery = `
-    SELECT user_id, users.name, SUM(experience_points) AS total_xp, SUM(experience_points) / 14.2857 AS hours
-    FROM user_experience
-    INNER JOIN users ON user_experience.user_id = users.id
-    WHERE YEARWEEK(timestamp, 1) = YEARWEEK(CURDATE(), 1)
-    GROUP BY user_id
-    ORDER BY total_xp DESC
-    LIMIT 10
+      SELECT user_id, users.name, users.avatar, SUM(experience_points) AS total_xp, SUM(experience_points) / 14.2857 AS hours
+      FROM user_experience
+      INNER JOIN users ON user_experience.user_id = users.id
+      WHERE YEARWEEK(timestamp, 1) = YEARWEEK(CURDATE(), 1)
+      GROUP BY user_id
+      ORDER BY total_xp DESC
+      LIMIT 10
   `;
 
   connection.query(weeklyRankingQuery, (err, results) => {
-    if (err) {
-      console.error('Erro ao buscar ranking semanal:', err);
-      return res.status(500).json({ message: 'Erro interno do servidor' });
-    }
+      if (err) {
+          console.error('Erro ao buscar ranking semanal:', err);
+          return res.status(500).json({ message: 'Erro interno do servidor' });
+      }
 
-    res.status(200).json(results);
+      // Prefix the avatar paths with the base URL
+      results.forEach(user => {
+          if (user.avatar) {
+              user.avatar = `${req.protocol}://${req.get('host')}${user.avatar}`;
+          }
+      });
+
+      res.status(200).json(results);
   });
 });
+
 
 ///Dados do Usuário da Barra Lateral Direita
 // Rota para obter as horas estudadas na semana pelo usuário logado
