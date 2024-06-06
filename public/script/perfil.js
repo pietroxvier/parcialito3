@@ -12,11 +12,12 @@ new Vue({
         },
         password: '',
         confirmPassword: '',
-        avatarFile: null,
+        avatares: [], // Lista de URLs de avatares
         jwtToken: localStorage.getItem('jwtToken')
     },
     mounted() {
         this.carregarDadosUsuario();
+        this.carregarAvatares();
     },
     methods: {
         carregarDadosUsuario() {
@@ -30,8 +31,17 @@ new Vue({
                 console.error('Erro ao carregar dados do usuário:', error);
             });
         },
-        onAvatarChange(event) {
-            this.avatarFile = event.target.files[0];
+        carregarAvatares() {
+            // Aqui você pode buscar os avatares disponíveis do servidor
+            axios.get(`${serverUrl}/avatares`, {
+                headers: {
+                    'Authorization': `Bearer ${this.jwtToken}`
+                }
+            }).then(response => {
+                this.avatares = response.data;
+            }).catch(error => {
+                console.error('Erro ao carregar avatares:', error);
+            });
         },
         atualizarPerfil() {
             if (this.password !== this.confirmPassword) {
@@ -39,20 +49,19 @@ new Vue({
                 return;
             }
 
-            const formData = new FormData();
-            formData.append('name', this.user.name);
-            formData.append('email', this.user.email);
+            const dadosAtualizados = {
+                name: this.user.name,
+                email: this.user.email,
+                avatar: this.user.avatar
+            };
+
             if (this.password) {
-                formData.append('password', this.password);
-            }
-            if (this.avatarFile) {
-                formData.append('avatar', this.avatarFile);
+                dadosAtualizados.password = this.password;
             }
 
-            axios.put(`${serverUrl}/userData`, formData, {
+            axios.put(`${serverUrl}/userData`, dadosAtualizados, {
                 headers: {
-                    'Authorization': `Bearer ${this.jwtToken}`,
-                    'Content-Type': 'multipart/form-data'
+                    'Authorization': `Bearer ${this.jwtToken}`
                 }
             }).then(() => {
                 alert('Perfil atualizado com sucesso!');

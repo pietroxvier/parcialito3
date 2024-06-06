@@ -782,6 +782,86 @@ app.get('/provasPorMateria/:materiaId', verifyToken, (req, res) => {
     });
   });
   
+  const multer = require('multer');
+  const upload = multer({ dest: 'uploads/' });
+  
+  app.put('/userData', verifyToken, upload.single('avatar'), (req, res) => {
+      const userId = req.userId;
+      const { name, email, password } = req.body;
+      const avatar = req.file ? `/uploads/${req.file.filename}` : null;
+  
+      let updateFields = [];
+      let updateValues = [];
+  
+      if (name) {
+          updateFields.push('name = ?');
+          updateValues.push(name);
+      }
+      if (email) {
+          updateFields.push('email = ?');
+          updateValues.push(email);
+      }
+      if (password) {
+          const hashedPassword = bcrypt.hashSync(password, 10);
+          updateFields.push('password = ?');
+          updateValues.push(hashedPassword);
+      }
+      if (avatar) {
+          updateFields.push('avatar = ?');
+          updateValues.push(avatar);
+      }
+  
+      updateValues.push(userId);
+  
+      const updateQuery = `UPDATE users SET ${updateFields.join(', ')} WHERE id = ?`;
+  
+      connection.query(updateQuery, updateValues, (err, result) => {
+          if (err) {
+              console.error('Erro ao atualizar perfil do usuário:', err);
+              return res.status(500).json({ message: 'Erro interno do servidor' });
+          }
+  
+          res.status(200).json({ message: 'Perfil atualizado com sucesso' });
+      });
+  });
+  app.get('/avatares', verifyToken, (req, res) => {
+    const avatares = [
+        '/avatares/avatar1.png',
+        '/avatares/avatar2.png',
+        '/avatares/avatar3.png',
+        // Adicione os caminhos dos avatares disponíveis aqui
+    ];
+    res.status(200).json(avatares);
+});
+
+app.put('/userData', verifyToken, (req, res) => {
+    const userId = req.userId;
+    const { name, email, avatar, password } = req.body;
+    const updateQuery = 'UPDATE users SET name = ?, email = ?, avatar = ? WHERE id = ?';
+    const updateValues = [name, email, avatar, userId];
+
+    connection.query(updateQuery, updateValues, (err) => {
+        if (err) {
+            console.error('Erro ao atualizar dados do usuário:', err);
+            return res.status(500).json({ message: 'Erro interno do servidor' });
+        }
+
+        if (password) {
+            const hashedPassword = bcrypt.hashSync(password, 10);
+            const updatePasswordQuery = 'UPDATE users SET password = ? WHERE id = ?';
+            connection.query(updatePasswordQuery, [hashedPassword, userId], (err) => {
+                if (err) {
+                    console.error('Erro ao atualizar senha do usuário:', err);
+                    return res.status(500).json({ message: 'Erro interno do servidor' });
+                }
+
+                res.status(200).json({ message: 'Perfil atualizado com sucesso!' });
+            });
+        } else {
+            res.status(200).json({ message: 'Perfil atualizado com sucesso!' });
+        }
+    });
+});
 
   // Obter histórico de desempenho
   app.get('/desempenho', verifyToken, (req, res) => {
