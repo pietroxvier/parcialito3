@@ -156,16 +156,16 @@ form input[type="password"] {
 }
 
 .avatar.selected {
-    border: 3px solid var(--primary-color);
+    border: 1px solid var(--primary-color);
 }
 
 .scroll-button {
-    width: 30px;
-    height: 30px;
+    width: 17px;
+    height: 40px;
     background-color: var(--primary-color);
     color: var(--white-color);
     border: none;
-    border-radius: 50%;
+    border-radius: 35%;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -181,15 +181,16 @@ form input[type="password"] {
 }
 
 .button-container {
-    text-align: center;
+    text-align: left;
 }
 
 form button {
     background-color: var(--primary-color);
+    box-shadow: 0px 4px #0063cd;
     color: var(--white-color);
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
