@@ -26,34 +26,34 @@
         <h1>Meu Perfil</h1>
         <form @submit.prevent="atualizarPerfil">
             <div>
-                <label>Nome</label>
-                <input type="text" v-model="user.name" />
+                <label for="name">Nome</label>
+                <input type="text" v-model="user.name" id="name">
             </div>
             <div>
-                <label>Avatar</label>
-                <div class="avatar-selection">
-                    <img v-for="avatar in avatars" 
-                         :src="avatar.src" 
-                         :alt="avatar.alt" 
-                         :class="{ selected: avatar.src === user.avatar }" 
-                         @click="selecionarAvatar(avatar)" />
+                <label for="avatar">Avatar</label>
+                <div class="avatar-container">
+                    <button type="button" @click="scrollLeft" class="scroll-button left">&lt;</button>
+                    <div class="avatar-wrapper">
+                        <img v-for="avatar in avatars" :src="avatar.src" :alt="avatar.alt" 
+                            :class="{ selected: user.avatar === avatar.src }" 
+                            @click="selecionarAvatar(avatar.src)" class="avatar">
+                    </div>
+                    <button type="button" @click="scrollRight" class="scroll-button right">&gt;</button>
                 </div>
             </div>
             <div>
-                <label>Email</label>
-                <input type="email" v-model="user.email" />
+                <label for="email">Email</label>
+                <input type="email" v-model="user.email" id="email">
             </div>
             <div>
-                <label>Senha</label>
-                <input type="password" v-model="password" />
+                <label for="password">Senha</label>
+                <input type="password" v-model="password" id="password">
             </div>
             <div>
-                <label>Confirmar Senha</label>
-                <input type="password" v-model="confirmPassword" />
+                <label for="confirmPassword">Confirmar Senha</label>
+                <input type="password" v-model="confirmPassword" id="confirmPassword">
             </div>
-            <div>
-                <button type="submit">Atualizar</button>
-            </div>
+            <button type="submit">Atualizar</button>
         </form>
     </main>
 </div>
