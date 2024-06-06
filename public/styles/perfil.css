@@ -93,7 +93,7 @@ h1 {
     color: var(--secondary-color);
 }
 
-form div {
+form .form-group {
     margin-bottom: 20px;
 }
 
@@ -109,6 +109,31 @@ form input[type="password"] {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+}
+
+.avatar-selection {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.avatar-selection img {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    border-radius: 50%;
+    margin: 0 10px;
+    transition: border 0.3s ease;
+}
+
+.avatar-selection img.selected {
+    border: 5px solid var(--primary-color);
+}
+
+.button-container {
+    text-align: center;
 }
 
 form button {
@@ -123,21 +148,4 @@ form button {
 
 form button:hover {
     background-color: var(--primary-hover-color);
-}
-
-.avatar-selection {
-    display: flex;
-    justify-content: space-around;
-}
-
-.avatar-selection img {
-    width: 100px;
-    height: 100px;
-    cursor: pointer;
-    border-radius: 50%;
-    transition: border 0.3s ease;
-}
-
-.avatar-selection img.selected {
-    border: 5px solid var(--primary-color);
 }

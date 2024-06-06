@@ -156,7 +156,7 @@ app.get('/perfil', verifyToken, (req, res) => {
 // Rota protegida que requer autenticação
 app.get('/userData', verifyToken, (req, res) => {
   const userId = req.userId;
-  const query = 'SELECT name, level, email, progress FROM users WHERE id = ?';
+  const query = 'SELECT name, level, email, progress, avatar FROM users WHERE id = ?';
   connection.query(query, [userId], (err, results) => {
     if (err) {
       console.error('Erro ao buscar dados do usuário no banco de dados:', err);
