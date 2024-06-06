@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="preload" href="../fontes/exo2-400.woff2" as="font" type="font/woff2" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking - O Jogo da Medicina</title>
+    <title>Ranking</title>
+    <link rel="stylesheet" href="ranking.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="styles/ranking.css">
-    <meta name="description" content="Ranking page for O Jogo da Medicina, an educational platform for doctors.">
-    <meta name="keywords" content="education, doctors, ranking, study hours, O Jogo da Medicina">
 </head>
 <body>
 <div id="app" v-cloak>
@@ -16,69 +15,36 @@
         <ul>
             <li><a href="progressbar.html"><i class="fas fa-clock"></i> Pomodoro</a></li>
             <li><a href="ranking.html"><i class="fas fa-trophy"></i> Ranking</a></li>
-            <li><a href="catalog.html"><i class="fas fa-book"></i>Choices</a></li>
+            <li><a href="choice1.html"><i class="fas fa-book"></i> Choices</a></li>
             <li><a href="#"><i class="fas fa-user"></i> Meu perfil</a></li>
             <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
-            <li><a href="adm2.html"><i class="fas fa-tools"></i>Admin</a></li>
+            <li><a href="adm2.html"><i class="fas fa-tools"></i> Admin</a></li>
             <li><a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
         </ul>
     </nav>
 
     <main class="content">
-        <div id="imagem">
+        <h1>Ranking Semanal</h1>
+        <div class="podium">
+            <div class="podium-2">
+                <img v-if="ranking[1]" :src="ranking[1].avatar" class="avatar avatar-2" alt="Second Place">
+            </div>
+            <div class="podium-1">
+                <img v-if="ranking[0]" :src="ranking[0].avatar" class="avatar avatar-1" alt="First Place">
+            </div>
+            <div class="podium-3">
+                <img v-if="ranking[2]" :src="ranking[2].avatar" class="avatar avatar-3" alt="Third Place">
+            </div>
+            <img src="images/podium.png" alt="Podium" class="podium-img">
         </div>
-        <section class="ranking-section">
-
-            <h1>Ranking {{ isDaily ? 'Diário' : 'Semanal' }}</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Posição</th>
-                        <th>Nome</th>
-                        <th>Horas Estudadas</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(player, index) in currentRanking" :key="player.id" :class="{'first-place': index === 0, 'second-place': index === 1, 'third-place': index === 2}">
-                        <td>
-                            <span v-if="index === 0"><i class="fas fa-crown"></i></span>
-                            <span v-else-if="index === 1"><i class="fas fa-medal"></i></span>
-                            <span v-else-if="index === 2"><i class="fas fa-award"></i></span>
-                            <span v-else>{{ index + 1 }}</span>
-                        </td>
-                        <td>{{ player.name }}</td>
-                        <td>{{ player.hours }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-        <div class="button-container">
-            <button @click="showDailyRanking" :class="{ active: isDaily }">Diário</button>
-            <button @click="showWeeklyRanking" :class="{ active: !isDaily }">Semanal</button>
-        </div>
-
+        <ul class="ranking-list">
+            <li v-for="(user, index) in ranking" :key="user.id">
+                <span>{{ index + 1 }}. {{ user.name }} - {{ user.hours }} horas</span>
+            </li>
+        </ul>
     </main>
-
-    <aside class="right-sidebar">
-        <div class="profile-summary">
-            <h2 class="icon-spacing"><i class="fas fa-user-md"></i> Perfil</h2>
-            <p><strong>Nome:</strong> {{ user.name }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Nível: </strong>{{ user.nivel }}</p>
-            <p><strong>Horas Semanais:</strong> {{ user.hoursStudied }}</p>
-        </div>
-        <div class="notifications">
-            <h2 class="icon-spacing"><i class="fas fa-bell"></i> Notificações</h2>
-            <ul>
-                <li>Não haverá aula nos dias 22 e 23.</li>
-            </ul>
-        </div>
-    </aside>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<script src="script/ranking.js"></script>
-<script src="script/logout.js"></script>
+<script src="ranking.js"></script>
 </body>
 </html>
