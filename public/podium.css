@@ -1,0 +1,123 @@
+:root {
+    --primary-color: #007bff;
+    --primary-hover-color: #0056b3;
+    --secondary-color: #333;
+    --background-color: #f4f4f4;
+    --white-color: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --row-hover-color: #f1f1f1;
+}
+
+body {
+    font-family: 'Exo2', sans-serif;
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+}
+
+#app {
+    display: flex;
+    flex-grow: 1;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 15px var(--shadow-color);
+    padding: 20px 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 15px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar ul li:hover {
+    background-color: var(--primary-hover-color);
+}
+
+.sidebar ul li a {
+    color: var(--white-color);
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+}
+
+.sidebar ul li a i {
+    margin-right: 8px;
+}
+
+.content {
+    margin-left: 200px;
+    padding: 40px;
+    width: calc(100% - 200px);
+    background-color: var(--white-color);
+    box-shadow: 0 0 15px var(--shadow-color);
+    border-radius: 10px;
+}
+
+.podium {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.podium-img {
+    width: 300px;
+    height: auto;
+}
+
+.avatar {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid var(--primary-color);
+}
+
+.avatar-1 {
+    top: 10px;
+    left: 125px;
+}
+
+.avatar-2 {
+    top: 40px;
+    left: 60px;
+}
+
+.avatar-3 {
+    top: 60px;
+    left: 190px;
+}
+
+.ranking-list {
+    list-style: none;
+    padding: 0;
+}
+
+.ranking-list li {
+    padding: 10px;
+    border-bottom: 1px solid var(--row-hover-color);
+    display: flex;
+    align-items: center;
+}

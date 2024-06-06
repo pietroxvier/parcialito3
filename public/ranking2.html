@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking</title>
+    <link rel="stylesheet" href="ranking.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app" v-cloak>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="progressbar.html"><i class="fas fa-clock"></i> Pomodoro</a></li>
+            <li><a href="ranking.html"><i class="fas fa-trophy"></i> Ranking</a></li>
+            <li><a href="choice1.html"><i class="fas fa-book"></i> Choices</a></li>
+            <li><a href="#"><i class="fas fa-user"></i> Meu perfil</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+            <li><a href="adm2.html"><i class="fas fa-tools"></i> Admin</a></li>
+            <li><a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <h1>Ranking Semanal</h1>
+        <div class="podium">
+            <div class="podium-2">
+                <img v-if="ranking[1]" :src="ranking[1].avatar" class="avatar avatar-2" alt="Second Place">
+            </div>
+            <div class="podium-1">
+                <img v-if="ranking[0]" :src="ranking[0].avatar" class="avatar avatar-1" alt="First Place">
+            </div>
+            <div class="podium-3">
+                <img v-if="ranking[2]" :src="ranking[2].avatar" class="avatar avatar-3" alt="Third Place">
+            </div>
+            <img src="podium.webp" alt="Podium" class="podium-img">
+        </div>
+        <ul class="ranking-list">
+            <li v-for="(user, index) in ranking" :key="user.id">
+                <span>{{ index + 1 }}. {{ user.name }} - {{ user.hours }} horas</span>
+            </li>
+        </ul>
+    </main>
+</div>
+
+<script src="scripts/ranking.js"></script>
+</body>
+</html>
