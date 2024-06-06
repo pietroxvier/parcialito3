@@ -5,14 +5,15 @@ new Vue({
         name: '',
         email: '',
         avatar: '',
-        password: '',
-        confirmPassword: ''
+        nivel: '',
+        hoursStudied: 0
       },
+      password: '',
+      confirmPassword: '',
       avatars: [
-        '/avatares/avatar1.webp',
-        '/avatares/avatar2.webp',
-        '/avatares/avatar3.webp',
-        '/avatares/avatar6.webp',// Adicione os caminhos corretos dos avatares aqui
+        { src: '/avatars/avatar1.png', alt: 'Avatar 1' },
+        { src: '/avatars/avatar2.png', alt: 'Avatar 2' },
+        { src: '/avatars/avatar3.png', alt: 'Avatar 3' }
       ],
       jwtToken: localStorage.getItem('jwtToken')
     },
@@ -26,26 +27,38 @@ new Vue({
             'Authorization': `Bearer ${this.jwtToken}`
           }
         }).then(response => {
-          this.user.name = response.data.name;
-          this.user.email = response.data.email;
-          this.user.avatar = response.data.avatar; // Adicione essa linha para carregar o avatar do usuário
+          this.user = response.data;
         }).catch(error => {
           console.error('Erro ao carregar dados do usuário:', error);
         });
       },
+      selecionarAvatar(avatar) {
+        this.user.avatar = avatar;
+      },
       atualizarPerfil() {
-        axios.put(`${window.location.protocol}//${window.location.hostname}/userData`, this.user, {
+        if (this.password !== this.confirmPassword) {
+          alert('As senhas não coincidem.');
+          return;
+        }
+  
+        const dadosAtualizados = {
+          name: this.user.name,
+          email: this.user.email,
+          avatar: this.user.avatar,
+          password: this.password,
+          confirmPassword: this.confirmPassword
+        };
+  
+        axios.put(`${window.location.protocol}//${window.location.hostname}/userData`, dadosAtualizados, {
           headers: {
             'Authorization': `Bearer ${this.jwtToken}`
           }
         }).then(() => {
           alert('Perfil atualizado com sucesso!');
+          this.carregarDadosUsuario(); // Recarrega os dados do usuário após atualização
         }).catch(error => {
           console.error('Erro ao atualizar perfil:', error);
         });
-      },
-      selecionarAvatar(avatar) {
-        this.user.avatar = avatar;
       }
     }
   });
