@@ -11,9 +11,9 @@ new Vue({
       password: '',
       confirmPassword: '',
       avatars: [
-        { src: '/avatars/avatar1.png', alt: 'Avatar 1' },
-        { src: '/avatars/avatar2.png', alt: 'Avatar 2' },
-        { src: '/avatars/avatar3.png', alt: 'Avatar 3' }
+        { src: '/avatars/avatar1.webp', alt: 'Avatar 1' },
+        { src: '/avatars/avatar2.webp', alt: 'Avatar 2' },
+        { src: '/avatars/avatar3.webp', alt: 'Avatar 3' }
       ],
       jwtToken: localStorage.getItem('jwtToken')
     },
