@@ -23,7 +23,8 @@ new Vue({
     selectedUserId: '', // Definindo selectedUserId no data
     experiencePoints: '',
     experienceMultiplier: '1', // Definindo o multiplicador padrão
-    jwtToken: localStorage.getItem('jwtToken')
+    jwtToken: localStorage.getItem('jwtToken'),
+    serverUrl: `${window.location.protocol}//${window.location.hostname}`
   },
   mounted() {
     this.buscarMaterias();
@@ -33,7 +34,7 @@ new Vue({
   },
   methods: {
     buscarMaterias() {
-      axios.get('http://localhost:3000/materias', {
+      axios.get('${this.serverUrl}/materias', {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -44,7 +45,7 @@ new Vue({
       });
     },
     buscarCategorias() {
-      axios.get('http://localhost:3000/categorias', {
+      axios.get('${this.serverUrl}/categorias', {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -55,7 +56,7 @@ new Vue({
       });
     },
     buscarProvas() {
-      axios.get('http://localhost:3000/provas', {
+      axios.get('${this.serverUrl}/provas', {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -67,7 +68,7 @@ new Vue({
     },
     buscarUsuarios() {
       console.log('Buscando usuários...');
-      axios.get('http://localhost:3000/users', {
+      axios.get('${this.serverUrl}/users', {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -79,7 +80,7 @@ new Vue({
       });
     },
     adicionarMateria() {
-      axios.post('http://localhost:3000/materias', this.novaMateria, {
+      axios.post('${this.serverUrl}/materias', this.novaMateria, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -92,7 +93,7 @@ new Vue({
       });
     },
     adicionarCategoria() {
-      axios.post('http://localhost:3000/categorias', this.novaCategoria, {
+      axios.post('${this.serverUrl}/categorias', this.novaCategoria, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -105,7 +106,7 @@ new Vue({
       });
     },
     adicionarProva() {
-      axios.post('http://localhost:3000/provas', this.novaProva, {
+      axios.post('${this.serverUrl}/provas', this.novaProva, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -125,7 +126,7 @@ new Vue({
       }
     },
     atualizarProva() {
-      axios.put(`http://localhost:3000/provas/${this.provaSelecionada}`, this.provaEdicao, {
+      axios.put(`${this.serverUrl}/provas/${this.provaSelecionada}`, this.provaEdicao, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -140,7 +141,7 @@ new Vue({
     },
 
     carregarQuestoesProva(provaId) {
-      axios.get(`http://localhost:3000/provas/${provaId}/questoes`, {
+      axios.get(`${this.serverUrl}/provas/${provaId}/questoes`, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -156,7 +157,7 @@ new Vue({
     },
   
     carregarQuestoesDisponiveis() {
-      axios.get('http://localhost:3000/questoes', {
+      axios.get('${this.serverUrl}/questoes', {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -170,7 +171,7 @@ new Vue({
     },
   
     filtrarQuestoesDisponiveis() {
-      axios.get('http://localhost:3000/questoesDisponiveis', {
+      axios.get('${this.serverUrl}/questoesDisponiveis', {
         params: {
           provaId: this.provaSelecionada,
           materiaId: this.questaoMateriaId,
@@ -194,7 +195,7 @@ new Vue({
         alert('Por favor, selecione pelo menos uma questão.');
         return;
       }
-      axios.post(`http://localhost:3000/provas/${this.provaSelecionada}/questoes`, {
+      axios.post(`${this.serverUrl}/provas/${this.provaSelecionada}/questoes`, {
         questoes: this.questoesSelecionadas
       }, {
         headers: {
@@ -209,7 +210,7 @@ new Vue({
       });
     },
     removerQuestaoDaProva(questaoId) {
-      axios.delete(`http://localhost:3000/provas/${this.provaSelecionada}/questoes/${questaoId}`, {
+      axios.delete(`${this.serverUrl}/provas/${this.provaSelecionada}/questoes/${questaoId}`, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -221,7 +222,7 @@ new Vue({
       });
     },
     atualizarQuestao(questaoId, questao) {
-      axios.put(`http://localhost:3000/questoes/${questaoId}`, {
+      axios.put(`${this.serverUrl}/questoes/${questaoId}`, {
         texto_questao: questao.texto_questao,
         opcoes: JSON.stringify(questao.opcoes),
         resposta_correta: questao.resposta_correta
@@ -240,7 +241,7 @@ new Vue({
         alert('Por favor, selecione uma categoria e adicione pelo menos uma questão.');
         return;
       }
-      axios.post('http://localhost:3000/questoes/multiplas', {
+      axios.post('${this.serverUrl}/questoes/multiplas', {
         questoes: this.questoesForm,
         categoriaId: this.categoriaId
       }, {
@@ -344,7 +345,7 @@ new Vue({
         const token = this.jwtToken;
     
         // Primeiro, obtenha o ID da matéria
-        const materiasResponse = await axios.get('http://localhost:3000/materias', {
+        const materiasResponse = await axios.get('${this.serverUrl}/materias', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -356,7 +357,7 @@ new Vue({
         }
     
         // Em seguida, obtenha o ID da categoria
-        const categoriasResponse = await axios.get('http://localhost:3000/categorias', {
+        const categoriasResponse = await axios.get('${this.serverUrl}/categorias', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -374,7 +375,7 @@ new Vue({
             continue;
           }
           console.log('Enviando questão:', question); // Log da questão sendo enviada
-          await axios.post('http://localhost:3000/questoes', {
+          await axios.post('${this.serverUrl}/questoes', {
             texto_questao: question.texto,
             categoria_id: categoria.id,
             resposta_correta: question.resposta_correta,
@@ -398,7 +399,7 @@ new Vue({
         userId: this.selectedUserId,
         experiencePoints: experiencePoints
       };
-      axios.post('http://localhost:3000/addExperience', data, {
+      axios.post('${this.serverUrl}/addExperience', data, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
