@@ -20,9 +20,9 @@ new Vue({
     questoesSelecionadas: [],
     categoriasFiltradas: [],
     users: [],
-    selectedUserId: '', // Definindo selectedUserId no data
+    selectedUserId: '',
     experiencePoints: '',
-    experienceMultiplier: '1', // Definindo o multiplicador padrão
+    experienceMultiplier: '1',
     jwtToken: localStorage.getItem('jwtToken'),
     serverUrl: `${window.location.protocol}//${window.location.hostname}`
   },
@@ -30,11 +30,11 @@ new Vue({
     this.buscarMaterias();
     this.buscarCategorias();
     this.buscarProvas();
-    this.buscarUsuarios(); // Buscar usuários ao montar o componente
+    this.buscarUsuarios();
   },
   methods: {
     buscarMaterias() {
-      axios.get('${this.serverUrl}/materias', {
+      axios.get(`${this.serverUrl}/materias`, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -45,7 +45,7 @@ new Vue({
       });
     },
     buscarCategorias() {
-      axios.get('${this.serverUrl}/categorias', {
+      axios.get(`${this.serverUrl}/categorias`, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -56,7 +56,7 @@ new Vue({
       });
     },
     buscarProvas() {
-      axios.get('${this.serverUrl}/provas', {
+      axios.get(`${this.serverUrl}/provas`, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -68,19 +68,19 @@ new Vue({
     },
     buscarUsuarios() {
       console.log('Buscando usuários...');
-      axios.get('${this.serverUrl}/users', {
+      axios.get(`${this.serverUrl}/users`, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
       }).then(response => {
         this.users = response.data;
-        console.log('Usuários carregados:', this.users); // Log para verificar os usuários carregados
+        console.log('Usuários carregados:', this.users);
       }).catch(error => {
         console.error('Erro ao buscar usuários:', error);
       });
     },
     adicionarMateria() {
-      axios.post('${this.serverUrl}/materias', this.novaMateria, {
+      axios.post(`${this.serverUrl}/materias`, this.novaMateria, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -93,7 +93,7 @@ new Vue({
       });
     },
     adicionarCategoria() {
-      axios.post('${this.serverUrl}/categorias', this.novaCategoria, {
+      axios.post(`${this.serverUrl}/categorias`, this.novaCategoria, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -106,7 +106,7 @@ new Vue({
       });
     },
     adicionarProva() {
-      axios.post('${this.serverUrl}/provas', this.novaProva, {
+      axios.post(`${this.serverUrl}/provas`, this.novaProva, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -139,7 +139,6 @@ new Vue({
         console.error('Erro ao atualizar prova:', error);
       });
     },
-
     carregarQuestoesProva(provaId) {
       axios.get(`${this.serverUrl}/provas/${provaId}/questoes`, {
         headers: {
@@ -148,16 +147,15 @@ new Vue({
       }).then(response => {
         this.questoesProva = response.data.map(questao => ({
           ...questao,
-          opcoes: JSON.parse(questao.opcoes) // Parseia as opções da string JSON para objeto
+          opcoes: JSON.parse(questao.opcoes)
         }));
-        this.filtrarQuestoesDisponiveis(); // Chama a função de filtragem após carregar as questões da prova
+        this.filtrarQuestoesDisponiveis();
       }).catch(error => {
         console.error('Erro ao carregar questões da prova:', error);
       });
     },
-  
     carregarQuestoesDisponiveis() {
-      axios.get('${this.serverUrl}/questoes', {
+      axios.get(`${this.serverUrl}/questoes`, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
@@ -169,9 +167,8 @@ new Vue({
         console.error('Erro ao carregar questões disponíveis:', error);
       });
     },
-  
     filtrarQuestoesDisponiveis() {
-      axios.get('${this.serverUrl}/questoesDisponiveis', {
+      axios.get(`${this.serverUrl}/questoesDisponiveis`, {
         params: {
           provaId: this.provaSelecionada,
           materiaId: this.questaoMateriaId,
@@ -188,8 +185,6 @@ new Vue({
         console.error('Erro ao filtrar questões disponíveis:', error);
       });
     },
-
-  
     adicionarQuestoesAProva() {
       if (this.questoesSelecionadas.length === 0) {
         alert('Por favor, selecione pelo menos uma questão.');
@@ -241,7 +236,7 @@ new Vue({
         alert('Por favor, selecione uma categoria e adicione pelo menos uma questão.');
         return;
       }
-      axios.post('${this.serverUrl}/questoes/multiplas', {
+      axios.post(`${this.serverUrl}/questoes/multiplas`, {
         questoes: this.questoesForm,
         categoriaId: this.categoriaId
       }, {
@@ -250,7 +245,7 @@ new Vue({
         }
       }).then(() => {
         alert('Questões adicionadas com sucesso!');
-        this.questoesForm = []; // Limpa o formulário após o envio
+        this.questoesForm = [];
       }).catch(error => {
         console.error('Erro ao adicionar questões:', error);
       });
@@ -258,17 +253,17 @@ new Vue({
     adicionarQuestaoForm() {
       this.questoesForm.push({
         texto: '',
-        opcoes: { 'A': '', 'B': '', 'C': '', 'D': '', 'E': '' }, // Inicializa todas as opções possíveis
-        resposta_correta: 'A'  // Um valor default pode ser útil
+        opcoes: { 'A': '', 'B': '', 'C': '', 'D': '', 'E': '' },
+        resposta_correta: 'A'
       });
-      this.atualizarOpcoesDeResposta(); // Atualiza as opções baseadas no número de respostas selecionado
+      this.atualizarOpcoesDeResposta();
     },
     atualizarOpcoesDeResposta() {
       this.questoesForm.forEach(questao => {
         if (this.numeroDeRespostas === '4') {
-          delete questao.opcoes['E']; // Remove a opção E se o número de respostas for 4
+          delete questao.opcoes['E'];
         } else if (!questao.opcoes['E']) {
-          questao.opcoes['E'] = ''; // Adiciona a opção E se não existir
+          questao.opcoes['E'] = '';
         }
       });
     },
@@ -299,44 +294,43 @@ new Vue({
     
       lines.forEach((line, index) => {
         line = line.trim();
-        console.log(`Processando linha ${index + 1}: ${line}`); // Log da linha atual
+        console.log(`Processando linha ${index + 1}: ${line}`);
     
         if (line.startsWith('Matéria:')) {
           metadata.materia = line.replace('Matéria:', '').trim();
-          console.log(`Encontrada Matéria: ${metadata.materia}`); // Log da matéria
+          console.log(`Encontrada Matéria: ${metadata.materia}`);
         } else if (line.startsWith('Categoria:')) {
           metadata.categoria = line.replace('Categoria:', '').trim();
-          console.log(`Encontrada Categoria: ${metadata.categoria}`); // Log da categoria
+          console.log(`Encontrada Categoria: ${metadata.categoria}`);
         } else if (line.startsWith('Questão')) {
           if (currentQuestion) {
             questions.push(currentQuestion);
-            console.log('Questão adicionada:', currentQuestion); // Log da questão adicionada
+            console.log('Questão adicionada:', currentQuestion);
           }
           currentQuestion = { texto: '', opcoes: {}, resposta_correta: '' };
         } else if (line.startsWith('Texto:')) {
           currentQuestion.texto = line.replace('Texto:', '').trim();
-          console.log(`Texto da Questão: ${currentQuestion.texto}`); // Log do texto da questão
+          console.log(`Texto da Questão: ${currentQuestion.texto}`);
         } else if (line.match(/^[A-E]:/)) {
           const option = line.charAt(0);
           const text = line.replace(`${option}:`, '').trim();
           currentQuestion.opcoes[option] = text;
-          console.log(`Opção ${option}: ${text}`); // Log da opção
+          console.log(`Opção ${option}: ${text}`);
         } else if (line.startsWith('Respuesta Correcta:')) {
           currentQuestion.resposta_correta = line.replace('Respuesta Correcta:', '').trim();
-          console.log(`Resposta Correta: ${currentQuestion.resposta_correta}`); // Log da resposta correta
+          console.log(`Resposta Correta: ${currentQuestion.resposta_correta}`);
         }
       });
     
       if (currentQuestion) {
         questions.push(currentQuestion);
-        console.log('Questão adicionada:', currentQuestion); // Log da última questão adicionada
+        console.log('Questão adicionada:', currentQuestion);
       }
     
-      console.log('Metadata:', metadata); // Log do metadata
-      console.log('Total de questões processadas:', questions.length); // Log do total de questões
+      console.log('Metadata:', metadata);
+      console.log('Total de questões processadas:', questions.length);
       return { metadata, questions };
     },
-  
     validarQuestoes(questions) {
       return questions.every(question => question.resposta_correta && question.opcoes && Object.keys(question.opcoes).length > 0);
     },
@@ -344,8 +338,7 @@ new Vue({
       try {
         const token = this.jwtToken;
     
-        // Primeiro, obtenha o ID da matéria
-        const materiasResponse = await axios.get('${this.serverUrl}/materias', {
+        const materiasResponse = await axios.get(`${this.serverUrl}/materias`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -356,8 +349,7 @@ new Vue({
           return;
         }
     
-        // Em seguida, obtenha o ID da categoria
-        const categoriasResponse = await axios.get('${this.serverUrl}/categorias', {
+        const categoriasResponse = await axios.get(`${this.serverUrl}/categorias`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -368,14 +360,13 @@ new Vue({
           return;
         }
     
-        // Finalmente, envie as questões para o servidor
         for (const question of questions) {
           if (!question.opcoes || Object.keys(question.opcoes).length === 0) {
             console.error('Questão sem opções:', question);
             continue;
           }
-          console.log('Enviando questão:', question); // Log da questão sendo enviada
-          await axios.post('${this.serverUrl}/questoes', {
+          console.log('Enviando questão:', question);
+          await axios.post(`${this.serverUrl}/questoes`, {
             texto_questao: question.texto,
             categoria_id: categoria.id,
             resposta_correta: question.resposta_correta,
@@ -399,7 +390,7 @@ new Vue({
         userId: this.selectedUserId,
         experiencePoints: experiencePoints
       };
-      axios.post('${this.serverUrl}/addExperience', data, {
+      axios.post(`${this.serverUrl}/addExperience`, data, {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
