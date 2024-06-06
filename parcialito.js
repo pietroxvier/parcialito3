@@ -826,9 +826,9 @@ app.get('/provasPorMateria/:materiaId', verifyToken, (req, res) => {
   });
   app.get('/avatares', verifyToken, (req, res) => {
     const avatares = [
-        '/avatares/avatar1.png',
-        '/avatares/avatar2.png',
-        '/avatares/avatar3.png',
+        '/avatares/avatar1.webp',
+        '/avatares/avatar2.webp',
+        '/avatares/avatar3.webp',
         // Adicione os caminhos dos avatares disponíveis aqui
     ];
     res.status(200).json(avatares);
