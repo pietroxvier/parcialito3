@@ -38,16 +38,13 @@ new Vue({
         alert(`Failed to load ${type} ranking. Please check the console for more details.`);
       }
     },
-    // Barra Lateral Direita 
     carregarDadosUsuario() {
       axios.get(this.getFullUrl('/userData'), {
         headers: {
           'Authorization': `Bearer ${this.jwtToken}`
         }
       }).then(response => {
-        this.user.name = response.data.name;
-        this.user.email = response.data.email;
-        this.user.nivel = response.data.level;
+        this.user = response.data;
       }).catch(error => {
         console.error('Erro ao carregar dados do usuário:', error);
       });
@@ -67,29 +64,24 @@ new Vue({
       this.isDaily = true;
       this.currentRanking = this.dailyRanking;
     },
-
     showWeeklyRanking() {
       this.isDaily = false;
       this.currentRanking = this.weeklyRanking;
     },
-
     getFullUrl(path) {
       return `${this.serverUrl}${path}`;
     },
-
-// Parte que carrega os avatares
     carregarRanking() {
-      axios.get(`${window.location.protocol}//${window.location.hostname}/weeklyRanking`, {
+      axios.get(this.getFullUrl('/weeklyRanking'), {
           headers: {
-              'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+              'Authorization': `Bearer ${this.jwtToken}`
           }
       }).then(response => {
           this.ranking = response.data;
       }).catch(error => {
           console.error('Erro ao carregar ranking:', error);
       });
-  },
-
+    },
   },
   mounted() {
     this.fetchRanking('daily');
