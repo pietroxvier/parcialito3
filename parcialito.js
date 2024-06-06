@@ -783,7 +783,6 @@ app.get('/provasPorMateria/:materiaId', verifyToken, (req, res) => {
     });
   });
   
-  const multer = require('multer');
   const upload = multer({ dest: 'avatares/' });
   
   app.put('/userData', verifyToken, upload.single('avatar'), (req, res) => {
