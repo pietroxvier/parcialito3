@@ -9,7 +9,6 @@
       body {
           font-family: 'Exo2', sans-serif; /* Use the correct font family name */
 		  background-color: #f4f4f4;
-            text-align: center;
             margin: 0;
             padding: 0;
             display: flex;
@@ -44,12 +43,12 @@
         .progress-container {
             width: 200%;
             max-width: 400px;
-            padding: 40px;
+            padding: 55px;
             background-color: #fff;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
 			  overflow-x: auto; /* Add horizontal scroll when content overflows */
-			
+			text-align: center;
         }
 
         h1 {
@@ -192,15 +191,13 @@
 
 /* Sidebar styles */
 .sidebar {
-    width: 150px;
+    width: 200px;
     background-color: #002244; /* #005b89 a que tava antes */
     color: #fff;
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
-    overflow-y: auto;
-    transition: width 0.3s ease; /* Add transition for smooth width change */
     z-index: 1000; /* Ensure it's above other elements */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
 }
@@ -211,7 +208,7 @@
 }
 
 .sidebar ul li {
-    padding: 10px;
+    padding: 15px;
     text-align: center; /* Center-align the text */
     transition: background-color 0.3s ease; /* Add hover effect */
 }
@@ -224,6 +221,7 @@
     color: #fff;
     text-decoration: none;
     font-weight: bold; /* Make the links bold */
+    text-align: center;
 }
 
 /* Sidebar toggle button styles */
