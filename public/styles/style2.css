@@ -222,6 +222,8 @@
     text-decoration: none;
     font-weight: bold; /* Make the links bold */
     text-align: center;
+    display: flex;
+    padding-left: 8px;
 }
 
 /* Sidebar toggle button styles */
