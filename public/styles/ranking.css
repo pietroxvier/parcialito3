@@ -264,7 +264,7 @@ tr.third-place td {
 
 .avatar {
     position: absolute;
-    width: 113px;
+    /*width: 113px;*/
     height: 100%;
 }
 
@@ -283,7 +283,7 @@ tr.third-place td {
 
 .avatar-1 {
     top: -104px;
-    left: 353px;
+    left: 378px;
 }
 
 #avatar-name-2 {
@@ -293,7 +293,7 @@ tr.third-place td {
 
 .avatar-2 {
     top: -75px;
-    left: 276px;
+    left: 292px;
 }
 
 #avatar-name-3 {
