@@ -220,10 +220,17 @@
 .sidebar ul li a {
     color: #fff;
     text-decoration: none;
-    font-weight: bold; /* Make the links bold */
-    text-align: center;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
     padding-left: 8px;
+    justify-content: flex-start; /* Alinha os itens ao início */
 }
+
+.sidebar ul li a i {
+    margin-right: 8px;
+}
+
 
 /* Sidebar toggle button styles */
 #sidebar-toggle {
