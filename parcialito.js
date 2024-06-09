@@ -30,15 +30,13 @@ const connection = mysql.createConnection({
   user: process.env.JAWSDB_MARIA_USER.trim(),
   password: process.env.JAWSDB_MARIA_PASSWORD.trim(),
   database: process.env.JAWSDB_MARIA_DATABASE.trim(),
+  timezone: 'America/Argentina/Buenos_Aires' // Define explicitamente o timezone
 });
 
 
 connection.connect(err => {
   if (err) throw err;
-  connection.query("SET time_zone = 'America/Argentina/Buenos_Aires'", (err) => {
-    if (err) throw err;
-    console.log('Fuso horário definido para America/Argentina/Buenos_Aires');
-  });
+  console.log('Conectado ao banco de dados');
 });
 
 // Middleware para analisar o corpo das solicitações
@@ -911,4 +909,6 @@ app.get('/loadTimerState', verifyToken, (req, res) => {
 // Inicia o servidor+
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
+  console.log("Current Server Time:", new Date().toString());
+  console.log("Current Argentina Time:", moment().tz("America/Argentina/Buenos_Aires").format('YYYY-MM-DD HH:mm:ss'));
 });
