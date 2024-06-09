@@ -33,12 +33,12 @@ const connection = mysql.createConnection({
 });
 
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Erro ao conectar ao banco de dados:', err);
-    return;
-  }
-  console.log('Conexão bem-sucedida ao banco de dados MySQL');
+connection.connect(err => {
+  if (err) throw err;
+  connection.query("SET time_zone = 'America/Argentina/Buenos_Aires'", (err) => {
+    if (err) throw err;
+    console.log('Fuso horário definido para America/Argentina/Buenos_Aires');
+  });
 });
 
 // Middleware para analisar o corpo das solicitações
