@@ -113,7 +113,11 @@ app.post('/login', (req, res) => {
       }
 
       if (result) {
-        const token = jwt.sign({ userId: user.id, userEmail: user.email }, JWT_SECRET, { expiresIn: '1d' });
+        const token = jwt.sign(
+          { userId: user.id, userEmail: user.email }, 
+          JWT_SECRET, 
+          { expiresIn: '30d' }
+        );
         res.status(200).json({ token });
       } else {
         res.status(401).json({ message: 'Credenciais inválidas' });
