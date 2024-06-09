@@ -10,6 +10,7 @@ const port = process.env.PORT || 3000;
 const multer = require('multer');  // Adicionando o multer
 const fs = require('fs');
 const path = require('path');
+const moment = require('moment-timezone');
 
 // Middleware para habilitar o CORS
 const corsOptions = {
@@ -29,7 +30,7 @@ const connection = mysql.createConnection({
   user: process.env.JAWSDB_MARIA_USER.trim(),
   password: process.env.JAWSDB_MARIA_PASSWORD.trim(),
   database: process.env.JAWSDB_MARIA_DATABASE.trim(),
-  timezone: 'America/Argentina/Buenos_Aires'
+  timezone: 'Z' // 'Z' para UTC
 });
 
 
@@ -224,8 +225,11 @@ app.get('/users', verifyToken, (req, res) => {
 app.post('/addExperiencePoints', verifyToken, (req, res) => {
   const userId = req.userId;
   const { experiencePoints } = req.body;
-  const insertExperienceQuery = 'INSERT INTO user_experience (user_id, experience_points) VALUES (?, ?)';
-  connection.query(insertExperienceQuery, [userId, experiencePoints], (err, result) => {
+
+  const currentTimestamp = moment().tz("America/Argentina/Buenos_Aires").format('YYYY-MM-DD HH:mm:ss');
+
+  const insertExperienceQuery = 'INSERT INTO user_experience (user_id, experience_points, timestamp) VALUES (?, ?, ?)';
+  connection.query(insertExperienceQuery, [userId, experiencePoints, currentTimestamp], (err, result) => {
     if (err) {
       console.error('Erro ao inserir pontos de experiência no banco de dados:', err);
       return res.status(500).json({ message: 'Erro interno do servidor' });
