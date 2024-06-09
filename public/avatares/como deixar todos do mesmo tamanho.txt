@@ -1,0 +1,1 @@
+usar a largura de 898 como padrão em todos.

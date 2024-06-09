@@ -28,7 +28,8 @@ const connection = mysql.createConnection({
   host: process.env.JAWSDB_MARIA_HOST.trim(),
   user: process.env.JAWSDB_MARIA_USER.trim(),
   password: process.env.JAWSDB_MARIA_PASSWORD.trim(),
-  database: process.env.JAWSDB_MARIA_DATABASE.trim()
+  database: process.env.JAWSDB_MARIA_DATABASE.trim(),
+  timezone: 'America/Argentina/Buenos_Aires'
 });
 
 
