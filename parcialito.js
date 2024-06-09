@@ -196,9 +196,12 @@ app.post('/addExperience', verifyToken, (req, res) => {
       return res.status(500).json({ message: 'Erro interno do servidor' });
     }
 
+    // Gerar timestamp no fuso horário correto
+    const currentTimestamp = moment().tz("America/Argentina/Buenos_Aires").format('YYYY-MM-DD HH:mm:ss');
+
     // Inserir na tabela user_experience
-    const insertExperienceQuery = 'INSERT INTO user_experience (user_id, experience_points, timestamp) VALUES (?, ?, NOW())';
-    connection.query(insertExperienceQuery, [userId, experiencePoints], (err, result) => {
+    const insertExperienceQuery = 'INSERT INTO user_experience (user_id, experience_points, timestamp) VALUES (?, ?, ?)';
+    connection.query(insertExperienceQuery, [userId, experiencePoints, currentTimestamp], (err, result) => {
       if (err) {
         console.error('Erro ao inserir pontos de experiência na tabela user_experience:', err);
         return res.status(500).json({ message: 'Erro interno do servidor' });
@@ -208,6 +211,7 @@ app.post('/addExperience', verifyToken, (req, res) => {
     });
   });
 });
+
 
 //Conseguir Lista de Usuários
 app.get('/users', verifyToken, (req, res) => {
