@@ -30,7 +30,6 @@ const connection = mysql.createConnection({
   user: process.env.JAWSDB_MARIA_USER.trim(),
   password: process.env.JAWSDB_MARIA_PASSWORD.trim(),
   database: process.env.JAWSDB_MARIA_DATABASE.trim(),
-  timezone: 'Z' // 'Z' para UTC
 });
 
 
@@ -226,6 +225,7 @@ app.post('/addExperiencePoints', verifyToken, (req, res) => {
   const userId = req.userId;
   const { experiencePoints } = req.body;
 
+  // Obtém a data e hora atual no fuso horário da Argentina
   const currentTimestamp = moment().tz("America/Argentina/Buenos_Aires").format('YYYY-MM-DD HH:mm:ss');
 
   const insertExperienceQuery = 'INSERT INTO user_experience (user_id, experience_points, timestamp) VALUES (?, ?, ?)';
@@ -237,6 +237,7 @@ app.post('/addExperiencePoints', verifyToken, (req, res) => {
     res.status(200).json({ message: 'Pontos de experiência adicionados com sucesso' });
   });
 });
+
 
 app.post('/updateLevel', verifyToken, (req, res) => {
   const userId = req.userId;
