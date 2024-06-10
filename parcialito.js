@@ -269,10 +269,10 @@ app.post('/updateLevel', verifyToken, (req, res) => {
 // Rota para obter o ranking diário
 app.get('/dailyRanking', verifyToken, (req, res) => {
   const dailyRankingQuery = `
-    SELECT user_id, users.name, SUM(experience_points) AS total_xp, SUM(experience_points) / 14.2857 AS hours
+    SELECT user_id, users.name, users.avatar, SUM(experience_points) AS total_xp, SUM(experience_points) / 14.2857 AS hours
     FROM user_experience
     INNER JOIN users ON user_experience.user_id = users.id
-    WHERE DATE(CONVERT_TZ(timestamp, '+00:00', 'America/Argentina/Buenos_Aires')) = CURDATE()
+    WHERE DATE(CONVERT_TZ(timestamp, '+00:00', 'America/Argentina/Buenos_Aires')) = DATE(CONVERT_TZ(CURDATE(), '+00:00', 'America/Argentina/Buenos_Aires'))
     GROUP BY user_id
     ORDER BY total_xp DESC
     LIMIT 10
@@ -287,6 +287,7 @@ app.get('/dailyRanking', verifyToken, (req, res) => {
     res.status(200).json(results);
   });
 });
+
 
 
 app.get('/weeklyRanking', verifyToken, (req, res) => {
