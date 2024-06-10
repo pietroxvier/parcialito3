@@ -13,16 +13,16 @@ new Vue({
     showMessage: false,
     startTime: null,
     breakStartTime: null,
-    timeRemaining: null, // Initially null to force selection
+    timeRemaining: null,
     isPaused: false,
     welcomeMessage: 'Escolha seu nome:',
     serverUrl: `${window.location.protocol}//${window.location.hostname}`,
     pomodoroSelected: false,
     pomodoroTime: null,
     breakTime: null,
-    timerStarted: false, // New property to track if timer has started
-    showPomodoroOptions: false, // New property to control visibility of pomodoro options
-    selectedPomodoro: null // New property to track selected pomodoro time
+    timerStarted: false,
+    showPomodoroOptions: false,
+    selectedPomodoro: null
   },
   computed: {
     progressWidth() {
@@ -148,7 +148,10 @@ new Vue({
         return;
       }
 
+      console.log(`Elapsed Time: ${elapsedTime} ms`);
+
       if (elapsedTime >= this.pomodoroTime) {
+        console.log('Tempo de estudo completo.');
         clearInterval(this.countdownInterval);
         this.updateProgress();
         this.canClick = false;
@@ -202,10 +205,11 @@ new Vue({
         this.isPaused = false;
       }
     },
-
+    
     handleMoreXpClick() {
       if (this.canClick && this.pomodoroSelected) {
-        this.timerStarted = true; // Set timer started to true
+        console.log('Iniciando o timer...');
+        this.timerStarted = true;
         this.canClick = false;
         this.showMessage = true;
         this.loadUserData();
