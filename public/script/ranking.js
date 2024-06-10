@@ -63,10 +63,12 @@ new Vue({
     showDailyRanking() {
       this.isDaily = true;
       this.currentRanking = this.dailyRanking;
+      this.fetchRanking('daily'); // Certifique-se de carregar o ranking diário ao clicar no botão
     },
     showWeeklyRanking() {
       this.isDaily = false;
       this.currentRanking = this.weeklyRanking;
+      this.fetchRanking('weekly'); // Certifique-se de carregar o ranking semanal ao clicar no botão
     },
     getFullUrl(path) {
       return `${this.serverUrl}${path}`;

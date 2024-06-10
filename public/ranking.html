@@ -27,7 +27,7 @@
     </nav>
 
     <main class="content">
-        <h1>Ranking Semanal</h1>
+        <h1>Ranking {{ isDaily ? 'Diário' : 'Semanal' }}</h1>
         <div class="podium">
             <div class="podium-2">
                 <div v-if="ranking[1]" id="avatar-name-2" class="avatar-name">{{ ranking[1].name.split(' ')[0] }}</div>
