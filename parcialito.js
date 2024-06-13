@@ -271,7 +271,7 @@ app.get('/dailyRanking', verifyToken, (req, res) => {
     SELECT user_id, users.name, users.avatar, SUM(experience_points) AS total_xp, SUM(experience_points) / 14.2857 AS hours
     FROM user_experience
     INNER JOIN users ON user_experience.user_id = users.id
-    WHERE DATE(timestamp) = CURDATE()
+    WHERE DATE(CONVERT_TZ(timestamp, 'UTC', 'America/Argentina/Buenos_Aires')) = DATE(CONVERT_TZ(NOW(), 'UTC', 'America/Argentina/Buenos_Aires'))
     GROUP BY user_id
     ORDER BY total_xp DESC
     LIMIT 10
@@ -295,7 +295,7 @@ app.get('/weeklyRanking', verifyToken, (req, res) => {
       SELECT user_id, users.name, users.avatar, SUM(experience_points) AS total_xp, SUM(experience_points) / 14.2857 AS hours
       FROM user_experience
       INNER JOIN users ON user_experience.user_id = users.id
-      WHERE YEARWEEK(timestamp, 1) = YEARWEEK(CURDATE(), 1)
+      WHERE YEARWEEK(CONVERT_TZ(timestamp, 'UTC', 'America/Argentina/Buenos_Aires'), 1) = YEARWEEK(CONVERT_TZ(NOW(), 'UTC', 'America/Argentina/Buenos_Aires'), 1)
       GROUP BY user_id
       ORDER BY total_xp DESC
       LIMIT 10
@@ -317,7 +317,6 @@ app.get('/weeklyRanking', verifyToken, (req, res) => {
       res.status(200).json(results);
   });
 });
-
 
 
 ///Dados do Usuário da Barra Lateral Direita
