@@ -139,7 +139,7 @@ new Vue({
     updateCountdown() {
       const currentTime = performance.now();
       let elapsedTime;
-
+    
       if (this.startTime) {
         elapsedTime = currentTime - this.startTime;
       } else if (this.breakStartTime) {
@@ -147,9 +147,9 @@ new Vue({
       } else {
         return;
       }
-
+    
       console.log(`Elapsed Time: ${elapsedTime} ms`);
-
+    
       if (elapsedTime >= this.pomodoroTime) {
         console.log('Tempo de estudo completo.');
         clearInterval(this.countdownInterval);
@@ -159,25 +159,27 @@ new Vue({
         this.countdownVisible = false;
         this.showMessage = true;
         this.message = "Hora da pausa";
-
-        const xpSound = document.getElementById("xpSound");
-        xpSound.volume = 0.2;
-        xpSound.play();
-
+    
+        if (this.xpSound) {
+          this.xpSound.play().catch(e => console.error("Erro ao reproduzir xpSound:", e));
+        }
+    
         let pauseTimeRemaining = this.breakTime;
         const pauseCountdown = setInterval(() => {
           const pauseElapsed = performance.now() - currentTime;
           const pauseRemainingMilliseconds = pauseTimeRemaining - pauseElapsed;
-
+    
           if (pauseRemainingMilliseconds <= 0) {
             clearInterval(pauseCountdown);
             this.countdown = "";
             this.message = "Parabéns! Você ganhou 1 ponto de experiência.";
             this.canClick = false;
             this.isPaused = false;
-            const endPauseSound = document.getElementById("endPause");
-            endPauseSound.volume = 0.2;
-            endPauseSound.play();
+            
+            if (this.endPauseSound) {
+              this.endPauseSound.play().catch(e => console.error("Erro ao reproduzir endPauseSound:", e));
+            }
+    
             setTimeout(() => {
               this.message = "Continue assim e estude mais uma vez!";
               this.canClick = true;
@@ -252,6 +254,12 @@ new Vue({
   },
 
   mounted() {
+    this.xpSound = document.getElementById("xpSound");
+    this.endPauseSound = document.getElementById("endPauseSound");
+    
+    if (this.xpSound) this.xpSound.volume = 0.2;
+    if (this.endPauseSound) this.endPauseSound.volume = 0.2;
+
     this.loadUserData();
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
